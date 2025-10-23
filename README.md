@@ -75,11 +75,19 @@ docker-compose up --build
 
 3. Open your browser and navigate to:
    - http://localhost:8080 - Default (.NET)
-   - http://localhost:8080/canvas - **Collaborative Canvas** (Try this!)
    - http://localhost:8080/nodejs - Node.js version
    - http://localhost:8080/python - Python version
    - http://localhost:8080/java - Java version
    - http://localhost:8080/go - Go version
+
+   **Collaborative Canvas (accessible from ALL platforms):**
+   - http://localhost:8080/canvas - Canvas via .NET
+   - http://localhost:8080/nodejs/canvas - Canvas via Node.js
+   - http://localhost:8080/python/canvas - Canvas via Python
+   - http://localhost:8080/java/canvas - Canvas via Java
+   - http://localhost:8080/go/canvas - Canvas via Go
+
+   All canvas routes share the SAME drawing surface in real-time!
 
 ### Stopping the Application
 
@@ -142,7 +150,15 @@ The demo includes a **real-time collaborative drawing canvas** that showcases ad
 - **Synchronized State**: All connected clients receive the same canvas state
 - **Platform Detection**: Shows which platform each user is connecting from
 
-Access the canvas from any platform at `/canvas` (e.g., http://localhost:8080/canvas)
+### How to Experience Cross-Platform Collaboration
+
+1. Open **http://localhost:8080/nodejs/canvas** in one browser tab (Node.js)
+2. Open **http://localhost:8080/python/canvas** in another tab (Python)
+3. Open **http://localhost:8080/java/canvas** in a third tab (Java)
+4. Draw in any tab and watch it appear instantly in ALL tabs!
+5. The user list shows which platform each person is using
+
+All platforms connect to the same WebSocket server and share the same canvas state.
 
 ## Technical Details
 
