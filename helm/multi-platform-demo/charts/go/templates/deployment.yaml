@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Release.Name }}-go
+  labels:
+    app: {{ $.Release.Name }}-go
+    platform: go
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ $.Release.Name }}-go
+  template:
+    metadata:
+      labels:
+        app: {{ $.Release.Name }}-go
+        platform: go
+    spec:
+      containers:
+      - name: go
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 5004
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}

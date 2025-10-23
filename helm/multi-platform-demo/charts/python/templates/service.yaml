@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Release.Name }}-python
+  labels:
+    app: {{ $.Release.Name }}-python
+    platform: python
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ .Values.service.port }}
+    targetPort: 5002
+    protocol: TCP
+    name: http
+  selector:
+    app: {{ $.Release.Name }}-python

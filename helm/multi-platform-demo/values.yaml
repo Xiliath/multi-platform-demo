@@ -1,0 +1,164 @@
+global:
+  domain: localhost
+  imagePullPolicy: IfNotPresent
+
+# Nginx LoadBalancer - primary access point
+nginx:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: nginx
+    tag: alpine
+    pullPolicy: IfNotPresent
+  service:
+    type: LoadBalancer
+    httpPort: 80
+    wsPort: 8081
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+# Optional Kubernetes Ingress (disabled by default)
+# Enable this if you have an Ingress controller installed
+# and prefer using Ingress instead of LoadBalancer
+ingress:
+  enabled: false
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  hosts:
+    - host: localhost
+      paths:
+        - path: /
+          pathType: Prefix
+          backend: dotnet
+        - path: /canvas
+          pathType: Prefix
+          backend: dotnet
+        - path: /join
+          pathType: Prefix
+          backend: dotnet
+        - path: /nodejs(/|$)(.*)
+          pathType: ImplementationSpecific
+          backend: nodejs
+        - path: /python(/|$)(.*)
+          pathType: ImplementationSpecific
+          backend: python
+        - path: /java(/|$)(.*)
+          pathType: ImplementationSpecific
+          backend: java
+        - path: /go(/|$)(.*)
+          pathType: ImplementationSpecific
+          backend: go
+
+dotnet:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: multi-platform-dotnet
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5000
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+nodejs:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: multi-platform-nodejs
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5001
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+python:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: multi-platform-python
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5002
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+java:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: multi-platform-java
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5003
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+
+go:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: multi-platform-go
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5004
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+websocket:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: multi-platform-websocket
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8081
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
