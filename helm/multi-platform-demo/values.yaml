@@ -145,6 +145,24 @@ go:
       cpu: 250m
       memory: 256Mi
 
+rust:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: multi-platform-rust
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5005
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
 websocket:
   enabled: true
   replicaCount: 1

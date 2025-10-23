@@ -13,7 +13,8 @@ string GetHtmlContent()
         .Replace("{{NODEJS_ACTIVE}}", "")
         .Replace("{{PYTHON_ACTIVE}}", "")
         .Replace("{{JAVA_ACTIVE}}", "")
-        .Replace("{{GO_ACTIVE}}", "");
+        .Replace("{{GO_ACTIVE}}", "")
+        .Replace("{{RUST_ACTIVE}}", "");
 }
 
 string GetCanvasContent()

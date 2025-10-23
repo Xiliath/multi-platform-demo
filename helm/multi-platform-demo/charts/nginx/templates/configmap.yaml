@@ -31,6 +31,10 @@ data:
             server {{ $.Release.Name }}-go:5004;
         }
 
+        upstream rust {
+            server {{ $.Release.Name }}-rust:5005;
+        }
+
         upstream websocket {
             server {{ $.Release.Name }}-websocket:8081;
         }
@@ -128,6 +132,23 @@ data:
 
             location = /go/canvas {
                 proxy_pass http://go/canvas;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
+            # Rust routes
+            location = /rust {
+                proxy_pass http://rust/;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
+            location = /rust/canvas {
+                proxy_pass http://rust/canvas;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

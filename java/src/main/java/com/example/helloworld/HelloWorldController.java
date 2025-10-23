@@ -29,7 +29,8 @@ public class HelloWorldController {
                 .replace("{{NODEJS_ACTIVE}}", "")
                 .replace("{{PYTHON_ACTIVE}}", "")
                 .replace("{{JAVA_ACTIVE}}", "active")
-                .replace("{{GO_ACTIVE}}", "");
+                .replace("{{GO_ACTIVE}}", "")
+                .replace("{{RUST_ACTIVE}}", "");
     }
 
     private String getCanvasContent() throws IOException {

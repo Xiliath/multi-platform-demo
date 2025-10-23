@@ -29,6 +29,7 @@ func getHtmlContent() (string, error) {
 		"{{PYTHON_ACTIVE}}", "",
 		"{{JAVA_ACTIVE}}", "",
 		"{{GO_ACTIVE}}", "active",
+		"{{RUST_ACTIVE}}", "",
 	).Replace(template)
 
 	return html, nil

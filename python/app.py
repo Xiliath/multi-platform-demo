@@ -19,7 +19,8 @@ def get_html_content():
         .replace('{{NODEJS_ACTIVE}}', '') \
         .replace('{{PYTHON_ACTIVE}}', 'active') \
         .replace('{{JAVA_ACTIVE}}', '') \
-        .replace('{{GO_ACTIVE}}', '')
+        .replace('{{GO_ACTIVE}}', '') \
+        .replace('{{RUST_ACTIVE}}', '')
 
     return html
 
