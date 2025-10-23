@@ -1,9 +1,12 @@
 #!/bin/bash
 set -e
 
-echo "==================================="
-echo "Quick Fix: Build Rust Image"
-echo "==================================="
+echo "============================================"
+echo "Build Rust Image Locally (Development Only)"
+echo "============================================"
+echo ""
+echo "NOTE: Images are automatically published via GitHub Actions!"
+echo "This script is only for local development/testing."
 echo ""
 
 # Build Rust image

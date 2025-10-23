@@ -9,6 +9,7 @@ docker build -f nodejs/Dockerfile -t multi-platform-nodejs:latest .
 docker build -f python/Dockerfile -t multi-platform-python:latest .
 docker build -f java/Dockerfile -t multi-platform-java:latest .
 docker build -f go/Dockerfile -t multi-platform-go:latest .
+docker build -f rust/Dockerfile -t multi-platform-rust:latest .
 docker build -f websocket/Dockerfile -t multi-platform-websocket:latest .
 
 echo "All images built successfully!"

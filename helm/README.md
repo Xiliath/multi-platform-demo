@@ -5,7 +5,7 @@ This Helm chart deploys the multi-platform Hello World application with collabor
 ## Architecture
 
 The application consists of:
-- **5 Platform Services**: .NET, Node.js, Python, Java, Go (ports 5000-5004)
+- **6 Platform Services**: .NET, Node.js, Python, Java, Go, Rust (ports 5000-5005)
 - **WebSocket Server**: Real-time collaboration (port 8081)
 - **Nginx Load Balancer**: Reverse proxy and routing (ports 80, 8081)
 
@@ -39,6 +39,7 @@ minikube image load multi-platform-nodejs:latest
 minikube image load multi-platform-python:latest
 minikube image load multi-platform-java:latest
 minikube image load multi-platform-go:latest
+minikube image load multi-platform-rust:latest
 minikube image load multi-platform-websocket:latest
 ```
 
@@ -49,6 +50,7 @@ kind load docker-image multi-platform-nodejs:latest
 kind load docker-image multi-platform-python:latest
 kind load docker-image multi-platform-java:latest
 kind load docker-image multi-platform-go:latest
+kind load docker-image multi-platform-rust:latest
 kind load docker-image multi-platform-websocket:latest
 ```
 
@@ -151,6 +153,7 @@ kubectl logs -l app=multi-platform-nodejs
 kubectl logs -l app=multi-platform-python
 kubectl logs -l app=multi-platform-java
 kubectl logs -l app=multi-platform-go
+kubectl logs -l app=multi-platform-rust
 kubectl logs -l app=multi-platform-websocket
 kubectl logs -l app=multi-platform-nginx
 ```
@@ -202,11 +205,13 @@ Internet → Nginx LoadBalancer (80, 8081)
     ├─ /python → Python Service (5002)
     ├─ /java → Java Service (5003)
     ├─ /go → Go Service (5004)
+    ├─ /rust → Rust Service (5005)
     ├─ /canvas → .NET Canvas (5000)
     ├─ /nodejs/canvas → Node.js Canvas (5001)
     ├─ /python/canvas → Python Canvas (5002)
     ├─ /java/canvas → Java Canvas (5003)
     ├─ /go/canvas → Go Canvas (5004)
+    ├─ /rust/canvas → Rust Canvas (5005)
     └─ /ws (8081) → WebSocket Service (8081)
 ```
 
@@ -215,10 +220,10 @@ All services are ClusterIP type and only accessible through the nginx LoadBalanc
 ### Resource Allocation
 
 Default resource requests/limits per service:
-- **.NET, Node.js, Python, Go, WebSocket**: 250m/256Mi → 500m/512Mi
+- **.NET, Node.js, Python, Go, Rust, WebSocket**: 250m/256Mi → 500m/512Mi
 - **Java**: 500m/512Mi → 1000m/1Gi (higher due to JVM)
 - **Nginx**: 250m/256Mi → 500m/512Mi
 
 Total cluster requirements:
-- **CPU**: ~2.5 cores (requests) / ~5 cores (limits)
-- **Memory**: ~2.5GB (requests) / ~5GB (limits)
+- **CPU**: ~3 cores (requests) / ~6 cores (limits)
+- **Memory**: ~3GB (requests) / ~6GB (limits)

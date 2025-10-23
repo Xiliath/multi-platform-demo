@@ -36,8 +36,8 @@ echo YOUR_TOKEN | docker login ghcr.io -u YOUR_USERNAME --password-stdin
 # Build and tag all images
 docker compose build
 
-# Tag and push each image
-VERSION="1.1.0"
+# Tag and push each image (replace VERSION with your Chart.yaml appVersion)
+VERSION="1.1.1"  # Should match helm/multi-platform-demo/Chart.yaml appVersion
 for SERVICE in dotnet nodejs python java go rust websocket; do
   docker tag multi-platform-$SERVICE ghcr.io/YOUR_USERNAME/multi-platform-$SERVICE:$VERSION
   docker tag multi-platform-$SERVICE ghcr.io/YOUR_USERNAME/multi-platform-$SERVICE:latest
