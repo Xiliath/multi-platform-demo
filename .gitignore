@@ -42,3 +42,8 @@ target/
 .idea/
 *.swp
 *.swo
+
+# Helm chart packages
+*.tgz
+.cr-release-packages/
+.cr-index/
