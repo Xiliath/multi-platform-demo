@@ -1,50 +1,20 @@
-# Publishing Images to GitHub Container Registry
+# Container Image Publishing
 
-This guide shows how to publish container images so others can easily use them.
+## Automated Publishing (Recommended)
 
-## Prerequisites
+Container images are **automatically built and published** via GitHub Actions when you push to the `main` branch.
 
-1. **GitHub Personal Access Token** with `write:packages` and `read:packages` scopes
-   - Create at: https://github.com/settings/tokens
-   - Click "Generate new token (classic)"
-   - Select scopes: `write:packages`, `read:packages`
-   - Copy the token
+### How It Works
 
-## Steps to Publish
+The workflow `.github/workflows/publish-images.yml` automatically:
+- Builds all 7 Docker images (dotnet, nodejs, python, java, go, rust, websocket)
+- Publishes to GitHub Container Registry: `ghcr.io/xiliath/multi-platform-*`
+- Tags with both version (e.g., `1.1.0`) and `latest`
+- No manual intervention required!
 
-### 1. Login to GitHub Container Registry
+### Making Images Public
 
-```bash
-echo YOUR_GITHUB_TOKEN | docker login ghcr.io -u YOUR_GITHUB_USERNAME --password-stdin
-```
-
-### 2. Build and Publish All Images
-
-```bash
-./publish-images.sh
-```
-
-This will:
-- Build all 7 Docker images
-- Tag them for GitHub Container Registry
-- Push to `ghcr.io/xiliath/multi-platform-*:latest`
-
-**Note**: Edit `publish-images.sh` and change `OWNER="xiliath"` to your GitHub username first!
-
-### 3. Update Helm Chart
-
-```bash
-./update-helm-for-public-images.sh
-```
-
-This automatically:
-- Updates all image repositories in `values.yaml` to use `ghcr.io`
-- Bumps chart version to 1.1.1
-- Updates CHANGELOG
-
-### 4. Make Images Public (Important!)
-
-By default, GitHub Container Registry packages are private. Make them public:
+By default, GitHub Container Registry packages are private. To make them public so users can install:
 
 1. Go to: https://github.com/users/YOUR_USERNAME/packages
 2. For each image (`multi-platform-dotnet`, `multi-platform-nodejs`, etc.):
@@ -53,22 +23,34 @@ By default, GitHub Container Registry packages are private. Make them public:
    - Scroll to "Danger Zone"
    - Click "Change visibility" → "Public"
 
-### 5. Commit and Release
+You only need to do this once per image.
+
+## Manual Publishing (Advanced)
+
+If you need to manually publish images for testing:
 
 ```bash
-git add helm/multi-platform-demo/values.yaml \
-        helm/multi-platform-demo/Chart.yaml \
-        helm/multi-platform-demo/CHANGELOG.md
+# Login to GitHub Container Registry
+echo YOUR_TOKEN | docker login ghcr.io -u YOUR_USERNAME --password-stdin
 
-git commit -m "Use public container registry images"
-git push
+# Build and tag all images
+docker compose build
+
+# Tag and push each image
+VERSION="1.1.0"
+for SERVICE in dotnet nodejs python java go rust websocket; do
+  docker tag multi-platform-$SERVICE ghcr.io/YOUR_USERNAME/multi-platform-$SERVICE:$VERSION
+  docker tag multi-platform-$SERVICE ghcr.io/YOUR_USERNAME/multi-platform-$SERVICE:latest
+  docker push ghcr.io/YOUR_USERNAME/multi-platform-$SERVICE:$VERSION
+  docker push ghcr.io/YOUR_USERNAME/multi-platform-$SERVICE:latest
+done
 ```
 
-Then merge the PR to trigger automatic Helm chart release!
+**Note**: Create a Personal Access Token with `write:packages` scope at https://github.com/settings/tokens
 
 ## For Users Installing
 
-Once published, users can install without building any images:
+Once images are published and public, users can install without building:
 
 ```bash
 helm repo add multi-platform https://xiliath.github.io/multi-platform-demo
@@ -76,25 +58,16 @@ helm repo update
 helm install my-demo multi-platform/multi-platform-demo
 ```
 
-Images will be automatically pulled from GitHub Container Registry!
+Images are automatically pulled from GitHub Container Registry!
 
-## Updating Images
+## Troubleshooting
 
-When you make changes:
+**Error: "unauthorized: unauthenticated"**
+- Images are still private. Make them public in package settings.
 
-```bash
-# Build and push new images
-./publish-images.sh
+**Error: "manifest unknown"**
+- Images haven't been built yet. Push to `main` to trigger the workflow.
 
-# Users pull the latest
-helm upgrade my-demo multi-platform/multi-platform-demo
-```
-
-## Alternative: Docker Hub
-
-If you prefer Docker Hub instead of GitHub Container Registry:
-
-1. Change `REGISTRY="ghcr.io"` to `REGISTRY="docker.io"`
-2. Change `OWNER="xiliath"` to your Docker Hub username
-3. Login: `docker login`
-4. Run `./publish-images.sh`
+**Workflow not running?**
+- Check: `.github/workflows/publish-images.yml` exists on `main` branch
+- Check: GitHub Actions is enabled in repository settings
