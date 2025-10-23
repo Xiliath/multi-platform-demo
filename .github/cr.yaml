@@ -1,3 +1,4 @@
 owner: Xiliath
 git-repo: multi-platform-demo
 charts-repo-url: https://xiliath.github.io/multi-platform-demo
+skip-existing: true
