@@ -1,14 +1,27 @@
 #!/bin/bash
 set -e
 
+# NOTE: Images are automatically published via GitHub Actions!
+# This script is for manual/local publishing only.
+# See: .github/workflows/publish-images.yml
+
 REGISTRY="ghcr.io"
 OWNER="xiliath"  # Change this to your GitHub username/org
 VERSION="1.1.0"   # Should match Helm chart version
 
 echo "==================================="
-echo "Publishing Images to GitHub Container Registry"
+echo "Manual Image Publishing"
 echo "Version: $VERSION"
 echo "==================================="
+echo ""
+echo "⚠️  NOTE: Images are automatically published via GitHub Actions"
+echo "   This script is only needed for manual/testing purposes"
+echo ""
+read -p "Continue with manual publish? (y/N) " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 0
+fi
 echo ""
 
 # Check if logged in
