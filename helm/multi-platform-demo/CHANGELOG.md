@@ -2,6 +2,16 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.1.2] - 2025-10-23
+
+### Fixed
+- **CRITICAL**: Added `ghcr.io/xiliath/` registry prefix to all image repositories
+- Images can now be pulled from GitHub Container Registry successfully
+- Fixed ImagePullBackOff errors when deploying from Helm repository
+
+### Changed
+- Image repositories now use full path: `ghcr.io/xiliath/multi-platform-*`
+
 ## [1.1.1] - 2025-10-23
 
 ### Changed
