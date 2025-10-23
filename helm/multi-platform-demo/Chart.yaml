@@ -1,0 +1,13 @@
+apiVersion: v2
+name: multi-platform-demo
+description: A Helm chart for Multi-Platform Hello World Demo with collaborative canvas
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - multi-platform
+  - demo
+  - collaborative-canvas
+  - websocket
+maintainers:
+  - name: Multi-Platform Demo Team

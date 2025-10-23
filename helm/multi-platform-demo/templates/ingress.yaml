@@ -1,0 +1,101 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "multi-platform-demo.fullname" . }}
+  labels:
+    {{- include "multi-platform-demo.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  rules:
+  {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $.Release.Name }}-dotnet
+              port:
+                number: 5000
+        - path: /canvas
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $.Release.Name }}-dotnet
+              port:
+                number: 5000
+        - path: /join
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $.Release.Name }}-dotnet
+              port:
+                number: 5000
+        - path: /nodejs
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $.Release.Name }}-nodejs
+              port:
+                number: 5001
+        - path: /python
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $.Release.Name }}-python
+              port:
+                number: 5002
+        - path: /java
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $.Release.Name }}-java
+              port:
+                number: 5003
+        - path: /go
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $.Release.Name }}-go
+              port:
+                number: 5004
+  {{- end }}
+---
+{{- if .Values.websocket.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "multi-platform-demo.fullname" . }}-websocket
+  labels:
+    {{- include "multi-platform-demo.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/websocket-services: {{ .Release.Name }}-websocket
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  rules:
+  {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+        - path: /ws
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $.Release.Name }}-websocket
+              port:
+                number: 8081
+  {{- end }}
+{{- end }}
+{{- end }}

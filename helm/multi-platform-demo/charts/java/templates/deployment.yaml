@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Release.Name }}-java
+  labels:
+    app: {{ $.Release.Name }}-java
+    platform: java
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ $.Release.Name }}-java
+  template:
+    metadata:
+      labels:
+        app: {{ $.Release.Name }}-java
+        platform: java
+    spec:
+      containers:
+      - name: java
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 5003
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}

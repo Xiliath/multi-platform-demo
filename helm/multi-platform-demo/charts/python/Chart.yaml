@@ -1,0 +1,6 @@
+apiVersion: v2
+name: python
+description: Python 3.13 Hello World service
+type: application
+version: 1.0.0
+appVersion: "3.13"

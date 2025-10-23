@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World - {{PLATFORM}}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .platform-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .info {
+            color: #666;
+            font-size: 1.1em;
+            margin: 30px 0;
+            line-height: 1.6;
+        }
+
+        .nav-links {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            background: #667eea;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-links a.active {
+            background: #764ba2;
+            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
+        }
+
+        .server-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            color: #555;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            .container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello World!</h1>
+        <div class="platform-badge">{{PLATFORM}}</div>
+        <div class="info">
+            Welcome to the Multi-Platform Hello World Demo.<br>
+            This identical page is being served by {{PLATFORM}}.
+        </div>
+
+        <div class="info" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 20px; border-radius: 15px; margin: 30px 0;">
+            <h2 style="margin-bottom: 15px; font-size: 1.5em;">✨ Collaborative Canvas!</h2>
+            <p style="margin-bottom: 20px;">Draw together in real-time with users from all platforms!</p>
+
+            <div style="display: flex; gap: 30px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <a href="{{CANVAS_LINK}}" style="display: inline-block; background: white; color: #667eea; padding: 15px 35px; border-radius: 25px; text-decoration: none; font-weight: 700; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 1.1em;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Launch Canvas →</a>
+                </div>
+
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 10px; font-size: 0.9em; opacity: 0.95;">📱 Scan to join:</p>
+                    <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        <div id="qrcode"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="/" class="{{DOTNET_ACTIVE}}">C# (.NET)</a>
+            <a href="/nodejs" class="{{NODEJS_ACTIVE}}">Node.js</a>
+            <a href="/python" class="{{PYTHON_ACTIVE}}">Python</a>
+            <a href="/java" class="{{JAVA_ACTIVE}}">Java</a>
+            <a href="/go" class="{{GO_ACTIVE}}">Go</a>
+        </div>
+
+        <div class="server-info">
+            Server: {{PLATFORM}}<br>
+            Version: {{VERSION}}<br>
+            Timestamp: {{TIMESTAMP}}
+        </div>
+    </div>
+
+    <script>
+        // Generate QR code immediately on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const canvasUrl = `http://${window.location.hostname}:8080{{CANVAS_LINK}}`;
+
+            new QRCode(document.getElementById('qrcode'), {
+                text: canvasUrl,
+                width: 128,
+                height: 128,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+    </script>
+</body>
+</html>
