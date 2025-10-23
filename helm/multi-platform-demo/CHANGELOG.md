@@ -15,6 +15,13 @@ All notable changes to this Helm chart will be documented in this file.
 - Images automatically built and tagged with Chart appVersion on push to main
 - Workflow automatically extracts version from Chart.yaml for consistent tagging
 
+### Removed
+- build-k8s-images.sh: No longer needed with automated publishing
+- fix-rust-image.sh: No longer needed with public registry
+- publish-images.sh: Replaced by automated GitHub Actions workflow
+- update-helm-for-public-images.sh: One-time script no longer needed
+- fix-gh-pages.sh: One-time fix no longer needed
+
 ### Fixed
 - Image deployment now works correctly with public registry
 - Helm upgrades now properly pull updated images
