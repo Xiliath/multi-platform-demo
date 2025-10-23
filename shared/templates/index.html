@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World - {{PLATFORM}}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -96,6 +97,50 @@
             font-size: 0.9em;
         }
 
+        .qr-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .qr-code-container {
+            display: inline-block;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .qr-url {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #667eea;
+            word-break: break-all;
+            margin-top: 10px;
+        }
+
+        .toggle-qr-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1em;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .toggle-qr-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(118, 75, 162, 0.4);
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 2.5em;
@@ -132,11 +177,63 @@
             <a href="/go" class="{{GO_ACTIVE}}">Go</a>
         </div>
 
+        <div class="qr-section" id="qrSection" style="display: none;">
+            <h3 style="color: #333; margin-bottom: 10px;">📱 Scan to Join the Canvas</h3>
+            <p style="color: #666; margin-bottom: 15px;">Share this QR code with attendees!</p>
+            <div class="qr-code-container">
+                <div id="qrcode"></div>
+            </div>
+            <div class="qr-url" id="qrUrl"></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="toggle-qr-btn" onclick="toggleQR()">📱 Show QR Code for Attendees</button>
+        </div>
+
         <div class="server-info">
             Server: {{PLATFORM}}<br>
             Version: {{VERSION}}<br>
             Timestamp: {{TIMESTAMP}}
         </div>
     </div>
+
+    <script>
+        let qrGenerated = false;
+
+        function toggleQR() {
+            const qrSection = document.getElementById('qrSection');
+            const button = document.querySelector('.toggle-qr-btn');
+            const isVisible = qrSection.style.display !== 'none';
+
+            if (!isVisible) {
+                qrSection.style.display = 'block';
+                button.textContent = '📱 Hide QR Code';
+                if (!qrGenerated) {
+                    generateQR();
+                    qrGenerated = true;
+                }
+            } else {
+                qrSection.style.display = 'none';
+                button.textContent = '📱 Show QR Code for Attendees';
+            }
+        }
+
+        function generateQR() {
+            // Generate QR code for the canvas URL using current hostname
+            const canvasUrl = `http://${window.location.hostname}:8080{{CANVAS_LINK}}`;
+            const qrUrl = document.getElementById('qrUrl');
+
+            qrUrl.textContent = canvasUrl;
+
+            new QRCode(document.getElementById('qrcode'), {
+                text: canvasUrl,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    </script>
 </body>
 </html>
