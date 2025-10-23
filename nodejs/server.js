@@ -13,6 +13,7 @@ const server = http.createServer((req, res) => {
             .replace(/{{PLATFORM}}/g, 'Node.js')
             .replace(/{{VERSION}}/g, process.version)
             .replace(/{{TIMESTAMP}}/g, new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC')
+            .replace(/{{CANVAS_LINK}}/g, '/nodejs/canvas')
             .replace(/{{DOTNET_ACTIVE}}/g, '')
             .replace(/{{NODEJS_ACTIVE}}/g, 'active')
             .replace(/{{PYTHON_ACTIVE}}/g, '')

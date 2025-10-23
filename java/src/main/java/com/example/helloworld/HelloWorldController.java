@@ -24,6 +24,7 @@ public class HelloWorldController {
                 .replace("{{PLATFORM}}", "Java (Spring Boot)")
                 .replace("{{VERSION}}", javaVersion)
                 .replace("{{TIMESTAMP}}", timestamp)
+                .replace("{{CANVAS_LINK}}", "/java/canvas")
                 .replace("{{DOTNET_ACTIVE}}", "")
                 .replace("{{NODEJS_ACTIVE}}", "")
                 .replace("{{PYTHON_ACTIVE}}", "")

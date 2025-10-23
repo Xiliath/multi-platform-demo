@@ -23,6 +23,7 @@ func getHtmlContent() (string, error) {
 		"{{PLATFORM}}", "Go",
 		"{{VERSION}}", runtime.Version(),
 		"{{TIMESTAMP}}", timestamp,
+		"{{CANVAS_LINK}}", "/go/canvas",
 		"{{DOTNET_ACTIVE}}", "",
 		"{{NODEJS_ACTIVE}}", "",
 		"{{PYTHON_ACTIVE}}", "",

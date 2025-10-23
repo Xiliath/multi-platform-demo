@@ -14,6 +14,7 @@ def get_html_content():
         .replace('{{PLATFORM}}', 'Python (Flask)') \
         .replace('{{VERSION}}', sys.version.split()[0]) \
         .replace('{{TIMESTAMP}}', datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')) \
+        .replace('{{CANVAS_LINK}}', '/python/canvas') \
         .replace('{{DOTNET_ACTIVE}}', '') \
         .replace('{{NODEJS_ACTIVE}}', '') \
         .replace('{{PYTHON_ACTIVE}}', 'active') \
