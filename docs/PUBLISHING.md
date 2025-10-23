@@ -9,7 +9,7 @@ Container images are **automatically built and published** via GitHub Actions wh
 The workflow `.github/workflows/publish-images.yml` automatically:
 - Builds all 7 Docker images (dotnet, nodejs, python, java, go, rust, websocket)
 - Publishes to GitHub Container Registry: `ghcr.io/xiliath/multi-platform-*`
-- Tags with both version (e.g., `1.1.0`) and `latest`
+- Tags with version from Chart.yaml appVersion (e.g., `1.1.1`) and `latest`
 - No manual intervention required!
 
 ### Making Images Public
