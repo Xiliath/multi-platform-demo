@@ -6,6 +6,8 @@ A unique Hello World website implemented in 5 of the most popular programming la
 
 - **Unified Design**: All platforms serve the exact same UI with consistent styling
 - **5 Modern Platforms**: Built with the latest versions of popular programming languages
+- **Real-time Collaborative Canvas**: Draw together with users from all platforms in real-time!
+- **WebSocket Communication**: Live synchronization across all connected users
 - **Docker-Powered**: Easy deployment using Docker Compose
 - **Nginx Routing**: Intelligent reverse proxy for seamless navigation
 
@@ -73,6 +75,7 @@ docker-compose up --build
 
 3. Open your browser and navigate to:
    - http://localhost:8080 - Default (.NET)
+   - http://localhost:8080/canvas - **Collaborative Canvas** (Try this!)
    - http://localhost:8080/nodejs - Node.js version
    - http://localhost:8080/python - Python version
    - http://localhost:8080/java - Java version
@@ -118,6 +121,28 @@ mvn spring-boot:run
 cd go
 go run main.go
 ```
+
+## Collaborative Canvas Feature
+
+The demo includes a **real-time collaborative drawing canvas** that showcases advanced multi-platform capabilities:
+
+### Features
+- **Real-time Drawing**: See strokes from all users instantly
+- **Multi-Platform Support**: Users from any platform can draw together
+- **Live User List**: See who's online and which platform they're using
+- **Color Palette**: 10 vibrant colors to choose from
+- **Brush Sizes**: 4 different brush sizes (small, medium, large, extra-large)
+- **Canvas Actions**: Clear canvas, download artwork as PNG
+- **Touch Support**: Works on mobile devices and tablets
+- **Auto-Reconnect**: Automatically reconnects if connection is lost
+
+### Technical Implementation
+- **WebSocket Server**: Node.js with `ws` library for real-time communication
+- **Canvas History**: Last 1000 drawing actions stored in memory
+- **Synchronized State**: All connected clients receive the same canvas state
+- **Platform Detection**: Shows which platform each user is connecting from
+
+Access the canvas from any platform at `/canvas` (e.g., http://localhost:8080/canvas)
 
 ## Technical Details
 

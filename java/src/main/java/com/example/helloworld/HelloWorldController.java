@@ -31,8 +31,18 @@ public class HelloWorldController {
                 .replace("{{GO_ACTIVE}}", "");
     }
 
+    private String getCanvasContent() throws IOException {
+        String template = Files.readString(Paths.get("../shared/templates/canvas.html"));
+        return template.replace("{{PLATFORM}}", "Java (Spring Boot)");
+    }
+
     @GetMapping(value = {"/", "/java"}, produces = "text/html")
     public String hello() throws IOException {
         return getHtmlContent();
+    }
+
+    @GetMapping(value = {"/canvas", "/java/canvas"}, produces = "text/html")
+    public String canvas() throws IOException {
+        return getCanvasContent();
     }
 }

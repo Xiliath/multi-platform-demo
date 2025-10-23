@@ -21,6 +21,14 @@ const server = http.createServer((req, res) => {
 
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(html);
+    } else if (req.url === '/nodejs/canvas' || req.url === '/canvas') {
+        const templatePath = path.join(__dirname, '../shared/templates/canvas.html');
+        const template = fs.readFileSync(templatePath, 'utf8');
+
+        const html = template.replace(/{{PLATFORM}}/g, 'Node.js');
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found');

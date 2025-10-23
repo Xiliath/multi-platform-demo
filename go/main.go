@@ -33,12 +33,34 @@ func getHtmlContent() (string, error) {
 	return html, nil
 }
 
+func getCanvasContent() (string, error) {
+	data, err := os.ReadFile("../shared/templates/canvas.html")
+	if err != nil {
+		return "", err
+	}
+
+	template := string(data)
+	html := strings.Replace(template, "{{PLATFORM}}", "Go", -1)
+
+	return html, nil
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" || r.URL.Path == "/go" {
 		html, err := getHtmlContent()
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			log.Printf("Error reading template: %v", err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprint(w, html)
+	} else if r.URL.Path == "/canvas" || r.URL.Path == "/go/canvas" {
+		html, err := getCanvasContent()
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			log.Printf("Error reading canvas template: %v", err)
 			return
 		}
 

@@ -22,10 +22,22 @@ def get_html_content():
 
     return html
 
+def get_canvas_content():
+    template_path = os.path.join(os.path.dirname(__file__), '../shared/templates/canvas.html')
+    with open(template_path, 'r') as f:
+        template = f.read()
+
+    return template.replace('{{PLATFORM}}', 'Python (Flask)')
+
 @app.route('/')
 @app.route('/python')
 def hello():
     return get_html_content()
+
+@app.route('/canvas')
+@app.route('/python/canvas')
+def canvas():
+    return get_canvas_content()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002, debug=False)

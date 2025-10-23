@@ -15,6 +15,13 @@ string GetHtmlContent()
         .Replace("{{GO_ACTIVE}}", "");
 }
 
+string GetCanvasContent()
+{
+    var template = File.ReadAllText("../shared/templates/canvas.html");
+    return template.Replace("{{PLATFORM}}", "C# (.NET 9.0)");
+}
+
 app.MapGet("/", () => Results.Content(GetHtmlContent(), "text/html"));
+app.MapGet("/canvas", () => Results.Content(GetCanvasContent(), "text/html"));
 
 app.Run();
