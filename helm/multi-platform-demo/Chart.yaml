@@ -7,7 +7,15 @@ appVersion: "1.0.0"
 keywords:
   - multi-platform
   - demo
-  - collaborative-canvas
+  - dotnet
+  - nodejs
+  - python
+  - java
+  - golang
   - websocket
+  - collaborative-canvas
+home: https://github.com/Xiliath/multi-platform-demo
+sources:
+  - https://github.com/Xiliath/multi-platform-demo
 maintainers:
   - name: Multi-Platform Demo Team
