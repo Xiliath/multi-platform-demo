@@ -64,8 +64,6 @@ services:
       context: .
       dockerfile: websocket/Dockerfile
     container_name: multi-platform-websocket
-    ports:
-      - "8081:8081"
     networks:
       - app-network
 
