@@ -1,11 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://github.com/Xiliath/multi-platform-demo">
-    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Platform Demo - Helm Chart Repository</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        .platforms {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .platform {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 10px 10px 0;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .links {
+            margin: 30px 0;
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to <a href="https://github.com/Xiliath/multi-platform-demo">repository</a>...</p>
+    <div class="container">
+        <h1>Multi-Platform Demo</h1>
+        <p class="subtitle">Helm Chart Repository</p>
+
+        <p>A demonstration application showcasing the same Hello World website implemented in 5 different programming languages with a collaborative canvas feature.</p>
+
+        <div class="platforms">
+            <span class="platform">C# .NET 9.0</span>
+            <span class="platform">Node.js 22</span>
+            <span class="platform">Python 3.13</span>
+            <span class="platform">Java 23</span>
+            <span class="platform">Go 1.23</span>
+        </div>
+
+        <div class="links">
+            <a href="https://github.com/Xiliath/multi-platform-demo" class="button">View on GitHub</a>
+            <a href="https://github.com/Xiliath/multi-platform-demo/releases" class="button">Releases</a>
+        </div>
+
+        <h2>Quick Start</h2>
+
+        <p><strong>1. Add the Helm repository:</strong></p>
+        <div class="code-block">
+            <code>helm repo add multi-platform https://xiliath.github.io/multi-platform-demo</code><br>
+            <code>helm repo update</code>
+        </div>
+
+        <p><strong>2. Install the chart:</strong></p>
+        <div class="code-block">
+            <code>helm install my-demo multi-platform/multi-platform-demo</code>
+        </div>
+
+        <p><strong>3. For desktop Kubernetes (Docker Desktop, Minikube, kind):</strong></p>
+        <div class="code-block">
+            <code>helm install my-demo multi-platform/multi-platform-demo \<br>
+            &nbsp;&nbsp;--set nginx.service.type=NodePort</code>
+        </div>
+
+        <h2>Features</h2>
+        <ul class="feature-list">
+            <li>Multi-platform Hello World in 5 languages</li>
+            <li>Real-time collaborative drawing canvas</li>
+            <li>WebSocket-based live synchronization</li>
+            <li>Unified UI theme across all platforms</li>
+            <li>QR code support for mobile access</li>
+            <li>Platform-specific routing</li>
+            <li>Production-ready with resource limits</li>
+            <li>Desktop Kubernetes optimized</li>
+        </ul>
+
+        <h2>Architecture</h2>
+        <p>The chart deploys 7 microservices:</p>
+        <ul class="feature-list">
+            <li>5 platform services (ports 5000-5004)</li>
+            <li>WebSocket server for real-time collaboration</li>
+            <li>Nginx reverse proxy and load balancer</li>
+        </ul>
+
+        <h2>Configuration</h2>
+        <p>View all configuration options:</p>
+        <div class="code-block">
+            <code>helm show values multi-platform/multi-platform-demo</code>
+        </div>
+
+        <h2>Documentation</h2>
+        <p>For detailed documentation, visit the <a href="https://github.com/Xiliath/multi-platform-demo/blob/main/helm/README.md">GitHub repository</a>.</p>
+
+        <h2>Resources</h2>
+        <ul class="feature-list">
+            <li><a href="https://github.com/Xiliath/multi-platform-demo">GitHub Repository</a></li>
+            <li><a href="https://github.com/Xiliath/multi-platform-demo/blob/main/helm/README.md">Installation Guide</a></li>
+            <li><a href="https://github.com/Xiliath/multi-platform-demo/blob/main/helm/multi-platform-demo/CHANGELOG.md">Changelog</a></li>
+            <li><a href="https://github.com/Xiliath/multi-platform-demo/issues">Report Issues</a></li>
+        </ul>
+    </div>
 </body>
 </html>
