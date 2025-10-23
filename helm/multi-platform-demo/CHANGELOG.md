@@ -18,8 +18,10 @@ All notable changes to this Helm chart will be documented in this file.
 ### Removed
 - build-k8s-images.sh: No longer needed with automated publishing
 - fix-rust-image.sh: No longer needed with public registry
+- install-k8s.sh: Replaced by Helm repository installation
 - publish-images.sh: Replaced by automated GitHub Actions workflow
 - update-helm-for-public-images.sh: One-time script no longer needed
+- update-helm-repo.sh: Replaced by automated GitHub Actions workflow
 - fix-gh-pages.sh: One-time fix no longer needed
 
 ### Fixed
