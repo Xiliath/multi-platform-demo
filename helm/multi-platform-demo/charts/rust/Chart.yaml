@@ -1,0 +1,6 @@
+apiVersion: v2
+name: rust
+description: Rust 1.82 Hello World service
+type: application
+version: 1.0.0
+appVersion: "1.82"

@@ -1,11 +1,11 @@
 # Multi-Platform Hello World Demo
 
-A unique Hello World website implemented in 5 of the most popular programming languages, all serving the same beautiful UI with identical styling. Each platform is accessible via its own route, with .NET serving as the default homepage.
+A unique Hello World website implemented in 6 of the most popular programming languages, all serving the same beautiful UI with identical styling. Each platform is accessible via its own route, with .NET serving as the default homepage.
 
 ## Features
 
 - **Unified Design**: All platforms serve the exact same UI with consistent styling
-- **5 Modern Platforms**: Built with the latest versions of popular programming languages
+- **6 Modern Platforms**: Built with the latest versions of popular programming languages
 - **Real-time Collaborative Canvas**: Draw together with users from all platforms in real-time!
 - **WebSocket Communication**: Live synchronization across all connected users
 - **Docker-Powered**: Easy deployment using Docker Compose
@@ -21,6 +21,7 @@ A unique Hello World website implemented in 5 of the most popular programming la
 | Python | Python | Flask | 3.13 | `/python` | 5002 |
 | Java | Java | Spring Boot | 23 | `/java` | 5003 |
 | Go | Go | Native HTTP | 1.23 | `/go` | 5004 |
+| Rust | Rust | Actix-web | 1.82 | `/rust` | 5005 |
 
 ## Project Structure
 

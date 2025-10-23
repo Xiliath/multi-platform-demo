@@ -2,8 +2,8 @@ apiVersion: v2
 name: multi-platform-demo
 description: A Helm chart for Multi-Platform Hello World Demo with collaborative canvas
 type: application
-version: 1.0.0
-appVersion: "1.0.0"
+version: 1.1.0
+appVersion: "1.1.0"
 keywords:
   - multi-platform
   - demo
@@ -12,6 +12,7 @@ keywords:
   - python
   - java
   - golang
+  - rust
   - websocket
   - collaborative-canvas
 home: https://github.com/Xiliath/multi-platform-demo

@@ -18,7 +18,8 @@ const server = http.createServer((req, res) => {
             .replace(/{{NODEJS_ACTIVE}}/g, 'active')
             .replace(/{{PYTHON_ACTIVE}}/g, '')
             .replace(/{{JAVA_ACTIVE}}/g, '')
-            .replace(/{{GO_ACTIVE}}/g, '');
+            .replace(/{{GO_ACTIVE}}/g, '')
+            .replace(/{{RUST_ACTIVE}}/g, '');
 
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(html);

@@ -13,6 +13,7 @@ services:
       - python
       - java
       - go
+      - rust
       - websocket
     networks:
       - app-network
@@ -111,6 +112,23 @@ services:
           path: ./go
           ignore:
             - "*.exe"
+        - action: sync
+          path: ./shared
+          target: /shared
+
+  rust:
+    build:
+      context: .
+      dockerfile: rust/Dockerfile
+    container_name: multi-platform-rust
+    networks:
+      - app-network
+    develop:
+      watch:
+        - action: rebuild
+          path: ./rust/src
+        - action: rebuild
+          path: ./rust/Cargo.toml
         - action: sync
           path: ./shared
           target: /shared
