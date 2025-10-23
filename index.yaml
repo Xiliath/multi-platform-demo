@@ -2,12 +2,12 @@ apiVersion: v1
 entries:
   multi-platform-demo:
   - apiVersion: v2
-    appVersion: "1.1.1"
-    created: "2025-10-23T23:21:14.000000000Z"
+    appVersion: "1.1.2"
+    created: "2025-10-23T23:41:55.000000000Z"
     description: A Helm chart for Multi-Platform Hello World Demo with collaborative canvas
     name: multi-platform-demo
     type: application
     urls:
     - https://github.com/Xiliath/multi-platform-demo/releases/download/multi-platform-demo-1.1.2/multi-platform-demo-1.1.2.tgz
     version: 1.1.2
-generated: "2025-10-23T23:21:14.000000000Z"
+generated: "2025-10-23T23:41:55.000000000Z"
