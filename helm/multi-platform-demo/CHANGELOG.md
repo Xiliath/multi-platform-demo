@@ -5,18 +5,20 @@ All notable changes to this Helm chart will be documented in this file.
 ## [1.1.1] - 2025-10-23
 
 ### Changed
-- All service image tags updated from `latest` to `1.1.0` for proper versioning
+- All service image tags updated from `latest` to `1.1.1` for proper versioning
 - All imagePullPolicy changed from `IfNotPresent` to `Always` for reliable updates
 - nginx imagePullPolicy changed to `Always` for consistency
 
 ### Added
 - Automated GitHub Actions workflow for building and publishing container images
 - Container images now published to GitHub Container Registry (ghcr.io)
-- Images automatically built and tagged on push to main branch
+- Images automatically built and tagged with Chart appVersion on push to main
+- Workflow automatically extracts version from Chart.yaml for consistent tagging
 
 ### Fixed
 - Image deployment now works correctly with public registry
 - Helm upgrades now properly pull updated images
+- Version consistency between Chart.yaml appVersion and image tags
 
 ## [1.1.0] - 2025-10-23
 
