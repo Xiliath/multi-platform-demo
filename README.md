@@ -56,12 +56,59 @@ multi-platform-demo/
 
 ## Quick Start
 
-### Prerequisites
+### Option 1: Kubernetes (Production)
+
+For production deployments, use our official Helm chart:
+
+#### Prerequisites
+- Kubernetes cluster (1.24+)
+- Helm 3.x
+- kubectl configured
+
+#### Installation
+
+**1. Add the Helm repository:**
+```bash
+helm repo add multi-platform https://xiliath.github.io/multi-platform-demo
+helm repo update
+```
+
+**2. Install the chart:**
+
+For **cloud Kubernetes** (AWS EKS, Google GKE, Azure AKS):
+```bash
+helm install my-demo multi-platform/multi-platform-demo
+```
+
+For **desktop Kubernetes** (Docker Desktop, Minikube, kind):
+```bash
+helm install my-demo multi-platform/multi-platform-demo \
+  --set nginx.service.type=NodePort
+```
+
+**3. Access the application:**
+
+Get service details:
+```bash
+kubectl get service my-demo-nginx
+```
+
+For NodePort access:
+```bash
+kubectl port-forward service/my-demo-nginx 8080:80 8081:8081
+```
+Then open: http://localhost:8080
+
+See the [Helm Chart Documentation](helm/README.md) for detailed configuration options.
+
+### Option 2: Docker Compose (Development)
+
+#### Prerequisites
 
 - Docker (20.10+)
 - Docker Compose (2.0+)
 
-### Running the Application
+#### Running the Application
 
 1. Clone the repository:
 ```bash
@@ -280,6 +327,48 @@ The application uses Nginx as a reverse proxy:
 ### Customizing the UI
 
 Edit `shared/templates/index.html` to modify the design. All platforms will automatically use the updated template.
+
+## Deployment Options
+
+### Kubernetes with Helm (Recommended for Production)
+
+The application includes production-ready Helm charts for Kubernetes deployment:
+
+- **Official Helm Repository**: https://xiliath.github.io/multi-platform-demo
+- **Chart Documentation**: [helm/README.md](helm/README.md)
+- **Quick Install**: `helm install my-demo multi-platform/multi-platform-demo`
+
+Features:
+- Horizontal Pod Autoscaling ready
+- Resource limits and requests configured
+- Nginx LoadBalancer/NodePort support
+- ConfigMap-based configuration
+- Support for cloud and desktop Kubernetes
+- Automated installation scripts included
+
+### Docker Compose (Development)
+
+Perfect for local development with hot-reload support:
+
+```bash
+docker-compose up --watch
+```
+
+Features:
+- Hot-reload for code changes
+- Instant template synchronization
+- Automatic rebuilds when dependencies change
+- All services running locally
+
+### Manual Installation
+
+Each platform can run independently. See "Running Individual Platforms" section above.
+
+## Documentation
+
+- [Helm Chart Documentation](helm/README.md) - Kubernetes deployment guide
+- [Troubleshooting Guide](helm/README.md#troubleshooting) - Common issues and solutions
+- [Changelog](helm/multi-platform-demo/CHANGELOG.md) - Version history
 
 ## License
 
