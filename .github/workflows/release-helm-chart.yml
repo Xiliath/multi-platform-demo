@@ -39,6 +39,9 @@ jobs:
             git checkout --orphan gh-pages
             git rm -rf .
 
+            # Create .nojekyll to disable Jekyll processing
+            touch .nojekyll
+
             # Create initial index.html
             cat > index.html <<EOF
           <!DOCTYPE html>
@@ -61,7 +64,7 @@ jobs:
           generated: "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
           EOF
 
-            git add index.html index.yaml
+            git add .nojekyll index.html index.yaml
             git commit -m "Initialize gh-pages branch"
             git push origin gh-pages
 
@@ -90,6 +93,9 @@ jobs:
         run: |
           cd gh-pages
 
+          # Ensure .nojekyll exists
+          touch .nojekyll
+
           # Get chart info
           CHART_VERSION=$(grep '^version:' ../helm/multi-platform-demo/Chart.yaml | awk '{print $2}')
           CHART_NAME=$(grep '^name:' ../helm/multi-platform-demo/Chart.yaml | awk '{print $2}')
@@ -116,10 +122,10 @@ jobs:
 
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add index.yaml
+          git add .nojekyll index.yaml
 
           if git diff --staged --quiet; then
-            echo "No changes to index.yaml"
+            echo "No changes to commit"
           else
             git commit -m "Update Helm repository index for $CHART_NAME $CHART_VERSION"
             git push origin gh-pages
