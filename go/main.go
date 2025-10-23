@@ -67,6 +67,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprint(w, html)
+	} else if r.URL.Path == "/join" || r.URL.Path == "/go/join" {
+		data, err := os.ReadFile("../shared/templates/join.html")
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			log.Printf("Error reading join template: %v", err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprint(w, string(data))
 	} else {
 		http.NotFound(w, r)
 	}

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Collaborative Canvas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .qr-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .qr-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .qr-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .qr-item h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .qr-code {
+            display: inline-block;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .url-display {
+            margin-top: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #667eea;
+            word-break: break-all;
+        }
+
+        .instructions {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .instructions h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .instructions ol {
+            margin-left: 25px;
+            line-height: 2;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .qr-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Join the Canvas!</h1>
+            <p>Scan a QR code to join the collaborative drawing experience</p>
+        </div>
+
+        <div class="qr-section">
+            <h2 style="color: #333; margin-bottom: 10px;">Scan to Connect</h2>
+            <p style="color: #666; margin-bottom: 20px;">Choose any platform - they all connect to the same shared canvas!</p>
+
+            <div class="qr-grid">
+                <div class="qr-item">
+                    <h3>.NET</h3>
+                    <div class="qr-code" id="qr-dotnet"></div>
+                    <div class="url-display" id="url-dotnet"></div>
+                </div>
+
+                <div class="qr-item">
+                    <h3>Node.js</h3>
+                    <div class="qr-code" id="qr-nodejs"></div>
+                    <div class="url-display" id="url-nodejs"></div>
+                </div>
+
+                <div class="qr-item">
+                    <h3>Python</h3>
+                    <div class="qr-code" id="qr-python"></div>
+                    <div class="url-display" id="url-python"></div>
+                </div>
+
+                <div class="qr-item">
+                    <h3>Java</h3>
+                    <div class="qr-code" id="qr-java"></div>
+                    <div class="url-display" id="url-java"></div>
+                </div>
+
+                <div class="qr-item">
+                    <h3>Go</h3>
+                    <div class="qr-code" id="qr-go"></div>
+                    <div class="url-display" id="url-go"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h2>How to Join</h2>
+            <ol>
+                <li><strong>Scan any QR code above</strong> with your phone's camera app</li>
+                <li><strong>Tap the notification</strong> that appears to open the link</li>
+                <li><strong>Start drawing!</strong> Your strokes appear on everyone's screen in real-time</li>
+                <li><strong>See who's online</strong> in the user list (shows which platform each person is using)</li>
+            </ol>
+
+            <div class="info-box">
+                <strong>💡 Pro Tips:</strong>
+                • All QR codes lead to the same shared canvas - pick any platform!<br>
+                • You'll see which platform you're using in the page header<br>
+                • Your drawings sync instantly with everyone else<br>
+                • Works great on phones, tablets, and computers
+            </div>
+
+            <a href="/" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Get the current host (will work with local IP)
+        const baseUrl = `http://${window.location.hostname}:8080`;
+
+        // QR Code configurations
+        const qrConfigs = [
+            { id: 'qr-dotnet', url: `${baseUrl}/canvas`, urlId: 'url-dotnet' },
+            { id: 'qr-nodejs', url: `${baseUrl}/nodejs/canvas`, urlId: 'url-nodejs' },
+            { id: 'qr-python', url: `${baseUrl}/python/canvas`, urlId: 'url-python' },
+            { id: 'qr-java', url: `${baseUrl}/java/canvas`, urlId: 'url-java' },
+            { id: 'qr-go', url: `${baseUrl}/go/canvas`, urlId: 'url-go' }
+        ];
+
+        // Generate QR codes
+        qrConfigs.forEach(config => {
+            new QRCode(document.getElementById(config.id), {
+                text: config.url,
+                width: 180,
+                height: 180,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Display URL
+            document.getElementById(config.urlId).textContent = config.url;
+        });
+
+        // Display helpful message if running on localhost
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const warning = document.createElement('div');
+            warning.style.cssText = 'background: #ff9800; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center;';
+            warning.innerHTML = `
+                <strong>⚠️ Running on localhost</strong><br>
+                To allow attendees to join from their devices, you need to access this page using your computer's local IP address instead of localhost.<br>
+                <br>
+                <strong>Find your IP address:</strong><br>
+                Windows: Open Command Prompt and run <code style="background: rgba(0,0,0,0.2); padding: 2px 8px; border-radius: 4px;">ipconfig</code><br>
+                Mac/Linux: Open Terminal and run <code style="background: rgba(0,0,0,0.2); padding: 2px 8px; border-radius: 4px;">ifconfig</code><br>
+                <br>
+                Then visit: <code style="background: rgba(0,0,0,0.2); padding: 2px 8px; border-radius: 4px;">http://YOUR-IP-ADDRESS:8080/join</code>
+            `;
+            document.querySelector('.container').insertBefore(warning, document.querySelector('.qr-section'));
+        }
+    </script>
+</body>
+</html>

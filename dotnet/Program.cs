@@ -22,7 +22,13 @@ string GetCanvasContent()
     return template.Replace("{{PLATFORM}}", "C# (.NET 9.0)");
 }
 
+string GetJoinContent()
+{
+    return File.ReadAllText("../shared/templates/join.html");
+}
+
 app.MapGet("/", () => Results.Content(GetHtmlContent(), "text/html"));
 app.MapGet("/canvas", () => Results.Content(GetCanvasContent(), "text/html"));
+app.MapGet("/join", () => Results.Content(GetJoinContent(), "text/html"));
 
 app.Run();

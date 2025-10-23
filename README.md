@@ -194,6 +194,31 @@ The demo includes a **real-time collaborative drawing canvas** that showcases ad
 
 All platforms connect to the same WebSocket server and share the same canvas state.
 
+### QR Codes for Demo Attendees
+
+Perfect for live demos and presentations! Allow attendees to join from their phones.
+
+**Setup:**
+1. Find your computer's local IP address:
+   - **Windows**: Run `ipconfig` in Command Prompt (look for IPv4 Address)
+   - **Mac/Linux**: Run `ifconfig` or `ip addr` (look for inet address)
+
+2. On your computer, visit: `http://YOUR-IP-ADDRESS:8080/join`
+   - Example: `http://192.168.1.100:8080/join`
+
+3. **Display the QR codes** on your screen or projector
+
+4. **Attendees scan** any QR code with their phone's camera
+
+5. **Everyone draws together** in real-time on the same canvas!
+
+**Features:**
+- 5 different QR codes (one for each platform)
+- All QR codes lead to the same shared canvas
+- Automatically uses your computer's IP address
+- Shows helpful setup instructions if accessed via localhost
+- Works on phones, tablets, and any device with a camera
+
 ## Technical Details
 
 ### Unified UI Design

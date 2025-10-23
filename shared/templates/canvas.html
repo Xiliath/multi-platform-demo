@@ -405,7 +405,8 @@
         function connectWebSocket() {
             const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const wsHost = window.location.hostname;
-            ws = new WebSocket(`${wsProtocol}//${wsHost}:8081`);
+            const wsPort = '8081';
+            ws = new WebSocket(`${wsProtocol}//${wsHost}:${wsPort}`);
 
             ws.onopen = () => {
                 console.log('Connected to WebSocket server');

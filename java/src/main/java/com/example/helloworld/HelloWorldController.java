@@ -46,4 +46,9 @@ public class HelloWorldController {
     public String canvas() throws IOException {
         return getCanvasContent();
     }
+
+    @GetMapping(value = {"/join", "/java/join"}, produces = "text/html")
+    public String join() throws IOException {
+        return Files.readString(Paths.get("../shared/templates/join.html"));
+    }
 }
