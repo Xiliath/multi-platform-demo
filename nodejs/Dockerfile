@@ -2,11 +2,11 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY nodejs/package*.json ./
 RUN npm install --production
 
-COPY . .
-COPY ../shared /shared
+COPY nodejs/ .
+COPY shared /shared
 
 EXPOSE 5001
 
