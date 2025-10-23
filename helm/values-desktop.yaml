@@ -57,6 +57,15 @@ go:
       cpu: 500m
       memory: 512Mi
 
+rust:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
 websocket:
   resources:
     requests:
