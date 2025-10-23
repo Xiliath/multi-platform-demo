@@ -11,6 +11,11 @@ All notable changes to this Helm chart will be documented in this file.
 
 ### Changed
 - Image repositories now use full path: `ghcr.io/xiliath/multi-platform-*`
+- All image tags updated from `1.1.1` to `1.1.2` for consistency
+- appVersion updated to `1.1.2` to match chart version
+
+### Added
+- Rust platform image will be built and published as `1.1.2` when merged to main
 
 ## [1.1.1] - 2025-10-23
 
