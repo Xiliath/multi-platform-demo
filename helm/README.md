@@ -5,7 +5,7 @@ This Helm chart deploys the multi-platform Hello World application with collabor
 ## Architecture
 
 The application consists of:
-- **5 Platform Services**: .NET, Node.js, Python, Java, Go (ports 5000-5004)
+- **6 Platform Services**: .NET, Node.js, Python, Java, Go, Rust (ports 5000-5005)
 - **WebSocket Server**: Real-time collaboration (port 8081)
 - **Nginx Load Balancer**: Reverse proxy and routing (ports 80, 8081)
 
@@ -14,76 +14,70 @@ The application consists of:
 1. Kubernetes cluster running (Docker Desktop, Minikube, kind, etc.)
 2. Helm 3.x installed
 3. kubectl configured to access your cluster
-4. Docker images built locally
 
 ## Installation
 
-### Step 1: Build Docker Images
+### Quick Install (Recommended)
 
-From the project root directory, run:
-
+**1. Add the Helm repository:**
 ```bash
-chmod +x build-k8s-images.sh
-./build-k8s-images.sh
+helm repo add multi-platform https://xiliath.github.io/multi-platform-demo
+helm repo update
 ```
 
-### Step 2: Load Images into Kubernetes
+**2. Install the chart:**
 
-**For Docker Desktop Kubernetes:**
-Images are automatically available to the cluster.
-
-**For Minikube:**
+For **cloud Kubernetes** (AWS EKS, Google GKE, Azure AKS):
 ```bash
-minikube image load multi-platform-dotnet:latest
-minikube image load multi-platform-nodejs:latest
-minikube image load multi-platform-python:latest
-minikube image load multi-platform-java:latest
-minikube image load multi-platform-go:latest
-minikube image load multi-platform-websocket:latest
+helm install my-demo multi-platform/multi-platform-demo
 ```
 
-**For kind:**
+For **desktop Kubernetes** (Docker Desktop, Minikube, kind):
 ```bash
-kind load docker-image multi-platform-dotnet:latest
-kind load docker-image multi-platform-nodejs:latest
-kind load docker-image multi-platform-python:latest
-kind load docker-image multi-platform-java:latest
-kind load docker-image multi-platform-go:latest
-kind load docker-image multi-platform-websocket:latest
+helm install my-demo multi-platform/multi-platform-demo \
+  --set nginx.service.type=NodePort
 ```
 
-### Step 3: Install the Helm Chart
-
+Or with custom values file:
 ```bash
-helm install multi-platform ./helm/multi-platform-demo
+helm install my-demo multi-platform/multi-platform-demo -f custom-values.yaml
 ```
 
-Or with custom values:
+### Install from Source (For Development)
+
+If you're developing locally and want to test changes:
+
 ```bash
-helm install multi-platform ./helm/multi-platform-demo -f custom-values.yaml
+# Clone the repository
+git clone https://github.com/Xiliath/multi-platform-demo.git
+cd multi-platform-demo
+
+# Install from local chart
+helm install my-demo ./helm/multi-platform-demo
 ```
 
-### Step 4: Access the Application
+**Note**: Images are automatically pulled from GitHub Container Registry (ghcr.io). You don't need to build them locally.
+
+### Access the Application
 
 **Get the LoadBalancer IP/Port:**
 ```bash
-kubectl get service multi-platform-nginx
+kubectl get service my-demo-nginx
 ```
 
-For LoadBalancer type (default):
+For LoadBalancer type (default on cloud):
 - Wait for EXTERNAL-IP to be assigned
 - Access: `http://<EXTERNAL-IP>`
 
-For NodePort (if you changed service type):
+For NodePort (default on desktop):
 ```bash
-kubectl get service multi-platform-nginx -o jsonpath='{.spec.ports[0].nodePort}'
+kubectl get service my-demo-nginx -o jsonpath='{.spec.ports[0].nodePort}'
 ```
-- Access: `http://<NODE-IP>:<NODE-PORT>`
+- Access: `http://localhost:<NODE-PORT>`
 
-For port-forward (development):
+For port-forward (alternative):
 ```bash
-kubectl port-forward service/multi-platform-nginx 8080:80
-kubectl port-forward service/multi-platform-nginx 8081:8081
+kubectl port-forward service/my-demo-nginx 8080:80 8081:8081
 ```
 - Access: `http://localhost:8080`
 
@@ -126,7 +120,12 @@ Key configurations:
 To upgrade an existing release:
 
 ```bash
-helm upgrade multi-platform ./helm/multi-platform-demo
+helm upgrade my-demo multi-platform/multi-platform-demo
+```
+
+Or from local source:
+```bash
+helm upgrade my-demo ./helm/multi-platform-demo
 ```
 
 ## Uninstalling
@@ -134,25 +133,27 @@ helm upgrade multi-platform ./helm/multi-platform-demo
 To remove the deployment:
 
 ```bash
-helm uninstall multi-platform
+helm uninstall my-demo
 ```
 
 ## Troubleshooting
 
 ### Check Pod Status
 ```bash
-kubectl get pods -l app.kubernetes.io/instance=multi-platform
+kubectl get pods -l app.kubernetes.io/instance=my-demo
 ```
 
 ### View Pod Logs
 ```bash
-kubectl logs -l app=multi-platform-dotnet
-kubectl logs -l app=multi-platform-nodejs
-kubectl logs -l app=multi-platform-python
-kubectl logs -l app=multi-platform-java
-kubectl logs -l app=multi-platform-go
-kubectl logs -l app=multi-platform-websocket
-kubectl logs -l app=multi-platform-nginx
+# Replace "my-demo" with your release name if different
+kubectl logs -l app=my-demo-dotnet
+kubectl logs -l app=my-demo-nodejs
+kubectl logs -l app=my-demo-python
+kubectl logs -l app=my-demo-java
+kubectl logs -l app=my-demo-go
+kubectl logs -l app=my-demo-rust
+kubectl logs -l app=my-demo-websocket
+kubectl logs -l app=my-demo-nginx
 ```
 
 ### Check Service Endpoints
@@ -161,16 +162,16 @@ kubectl get endpoints
 ```
 
 ### ImagePullBackOff Errors
-If you see ImagePullBackOff errors, ensure:
-1. Images are built: `docker images | grep multi-platform`
-2. Images are loaded into your cluster (see Step 2)
-3. imagePullPolicy is set to `IfNotPresent` (default)
+If you see ImagePullBackOff errors:
+1. Check images are public: https://github.com/orgs/xiliath/packages
+2. Verify internet connectivity from your cluster
+3. Check if images exist: `docker pull ghcr.io/xiliath/multi-platform-dotnet:1.1.1`
 
 ### WebSocket Connection Issues
 Ensure:
 1. Both ports 80 and 8081 are exposed on nginx service
-2. WebSocket service is running: `kubectl get pods -l app=multi-platform-websocket`
-3. Check nginx logs: `kubectl logs -l app=multi-platform-nginx`
+2. WebSocket service is running: `kubectl get pods -l app=my-demo-websocket`
+3. Check nginx logs: `kubectl logs -l app=my-demo-nginx`
 
 ## Development
 
@@ -188,7 +189,7 @@ helm lint ./helm/multi-platform-demo
 
 Debug installation:
 ```bash
-helm install multi-platform ./helm/multi-platform-demo --debug --dry-run
+helm install my-demo ./helm/multi-platform-demo --debug --dry-run
 ```
 
 ## Architecture Details
@@ -202,11 +203,13 @@ Internet → Nginx LoadBalancer (80, 8081)
     ├─ /python → Python Service (5002)
     ├─ /java → Java Service (5003)
     ├─ /go → Go Service (5004)
+    ├─ /rust → Rust Service (5005)
     ├─ /canvas → .NET Canvas (5000)
     ├─ /nodejs/canvas → Node.js Canvas (5001)
     ├─ /python/canvas → Python Canvas (5002)
     ├─ /java/canvas → Java Canvas (5003)
     ├─ /go/canvas → Go Canvas (5004)
+    ├─ /rust/canvas → Rust Canvas (5005)
     └─ /ws (8081) → WebSocket Service (8081)
 ```
 
@@ -215,10 +218,10 @@ All services are ClusterIP type and only accessible through the nginx LoadBalanc
 ### Resource Allocation
 
 Default resource requests/limits per service:
-- **.NET, Node.js, Python, Go, WebSocket**: 250m/256Mi → 500m/512Mi
+- **.NET, Node.js, Python, Go, Rust, WebSocket**: 250m/256Mi → 500m/512Mi
 - **Java**: 500m/512Mi → 1000m/1Gi (higher due to JVM)
 - **Nginx**: 250m/256Mi → 500m/512Mi
 
 Total cluster requirements:
-- **CPU**: ~2.5 cores (requests) / ~5 cores (limits)
-- **Memory**: ~2.5GB (requests) / ~5GB (limits)
+- **CPU**: ~3 cores (requests) / ~6 cores (limits)
+- **Memory**: ~3GB (requests) / ~6GB (limits)

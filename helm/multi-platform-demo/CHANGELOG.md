@@ -2,6 +2,33 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.1.1] - 2025-10-23
+
+### Changed
+- All service image tags updated from `latest` to `1.1.1` for proper versioning
+- All imagePullPolicy changed from `IfNotPresent` to `Always` for reliable updates
+- nginx imagePullPolicy changed to `Always` for consistency
+
+### Added
+- Automated GitHub Actions workflow for building and publishing container images
+- Container images now published to GitHub Container Registry (ghcr.io)
+- Images automatically built and tagged with Chart appVersion on push to main
+- Workflow automatically extracts version from Chart.yaml for consistent tagging
+
+### Removed
+- build-k8s-images.sh: No longer needed with automated publishing
+- fix-rust-image.sh: No longer needed with public registry
+- install-k8s.sh: Replaced by Helm repository installation
+- publish-images.sh: Replaced by automated GitHub Actions workflow
+- update-helm-for-public-images.sh: One-time script no longer needed
+- update-helm-repo.sh: Replaced by automated GitHub Actions workflow
+- fix-gh-pages.sh: One-time fix no longer needed
+
+### Fixed
+- Image deployment now works correctly with public registry
+- Helm upgrades now properly pull updated images
+- Version consistency between Chart.yaml appVersion and image tags
+
 ## [1.1.0] - 2025-10-23
 
 ### Added

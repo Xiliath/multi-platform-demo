@@ -47,6 +47,11 @@ multi-platform-demo/
 │   ├── main.go
 │   ├── go.mod
 │   └── Dockerfile
+├── rust/                # Rust implementation
+│   ├── src/
+│   │   └── main.rs
+│   ├── Cargo.toml
+│   └── Dockerfile
 ├── shared/              # Shared resources
 │   └── templates/
 │       └── index.html   # Unified HTML template
@@ -128,6 +133,7 @@ docker-compose up --build
    - http://localhost:8080/python - Python version
    - http://localhost:8080/java - Java version
    - http://localhost:8080/go - Go version
+   - http://localhost:8080/rust - Rust version
 
    **Collaborative Canvas (accessible from ALL platforms):**
    - http://localhost:8080/canvas - Canvas via .NET
@@ -135,6 +141,7 @@ docker-compose up --build
    - http://localhost:8080/python/canvas - Canvas via Python
    - http://localhost:8080/java/canvas - Canvas via Java
    - http://localhost:8080/go/canvas - Canvas via Go
+   - http://localhost:8080/rust/canvas - Canvas via Rust
 
    All canvas routes share the SAME drawing surface in real-time!
 
@@ -169,7 +176,7 @@ This enables automatic updates when you edit code:
 4. Edit `nodejs/server.js` to modify functionality
 5. Server automatically restarts with your changes
 
-This creates a true hot-reload development experience across all 5 platforms!
+This creates a true hot-reload development experience across all 6 platforms!
 
 ### Stopping the Application
 
@@ -210,6 +217,12 @@ mvn spring-boot:run
 ```bash
 cd go
 go run main.go
+```
+
+### Rust
+```bash
+cd rust
+cargo run
 ```
 
 ## Collaborative Canvas Feature
@@ -261,7 +274,7 @@ Perfect for live demos and presentations! Allow attendees to join from their pho
 5. **Everyone draws together** in real-time on the same canvas!
 
 **Features:**
-- 5 different QR codes (one for each platform)
+- 6 different QR codes (one for each platform)
 - All QR codes lead to the same shared canvas
 - Automatically uses your computer's IP address
 - Shows helpful setup instructions if accessed via localhost
@@ -313,6 +326,11 @@ The application uses Nginx as a reverse proxy:
 - Compiled binary
 - Excellent performance
 - Built-in concurrency
+
+**Rust (1.82 + Actix-web)**
+- Memory safety without garbage collection
+- High performance
+- Modern async runtime
 
 ## Development
 
