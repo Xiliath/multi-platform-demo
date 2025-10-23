@@ -1,0 +1,67 @@
+# Values file optimized for desktop Kubernetes clusters
+# (Docker Desktop, Minikube, kind)
+#
+# Usage:
+#   helm install multi-platform ./helm/multi-platform-demo -f helm/values-desktop.yaml
+
+# Use NodePort instead of LoadBalancer for desktop clusters
+nginx:
+  service:
+    type: NodePort
+    httpPort: 80
+    wsPort: 8081
+
+# Reduce resource requests for desktop environments
+dotnet:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+nodejs:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+python:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+java:
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+go:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+websocket:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

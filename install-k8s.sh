@@ -39,12 +39,14 @@ echo ""
 
 # Step 3: Install Helm chart
 echo "Step 3: Installing Helm chart..."
+# Use desktop-optimized values for local clusters
+VALUES_FILE="./helm/values-desktop.yaml"
 if helm list | grep -q "^multi-platform"; then
     echo "Existing installation found. Upgrading..."
-    helm upgrade multi-platform ./helm/multi-platform-demo
+    helm upgrade multi-platform ./helm/multi-platform-demo -f $VALUES_FILE
 else
-    echo "Installing new release..."
-    helm install multi-platform ./helm/multi-platform-demo
+    echo "Installing new release with desktop-optimized values..."
+    helm install multi-platform ./helm/multi-platform-demo -f $VALUES_FILE
 fi
 echo ""
 
@@ -61,12 +63,37 @@ echo ""
 echo "Getting service information..."
 kubectl get service multi-platform-nginx
 echo ""
-echo "To access the application:"
-echo "1. Check the EXTERNAL-IP of multi-platform-nginx service above"
-echo "2. If it shows <pending>, use port-forward instead:"
-echo "   kubectl port-forward service/multi-platform-nginx 8080:80 8081:8081"
-echo "   Then access: http://localhost:8080"
+
+# Get NodePort details
+HTTP_PORT=$(kubectl get service multi-platform-nginx -o jsonpath='{.spec.ports[?(@.name=="http")].nodePort}')
+WS_PORT=$(kubectl get service multi-platform-nginx -o jsonpath='{.spec.ports[?(@.name=="websocket")].nodePort}')
+
+echo "NodePort Configuration:"
+echo "  HTTP Port: $HTTP_PORT"
+echo "  WebSocket Port: $WS_PORT"
 echo ""
+
+# Show access URL based on cluster type
+if command -v minikube &> /dev/null && minikube status &> /dev/null; then
+    MINIKUBE_IP=$(minikube ip)
+    echo "Access your application at:"
+    echo "  http://$MINIKUBE_IP:$HTTP_PORT"
+    echo ""
+elif command -v kind &> /dev/null && kind get clusters 2>/dev/null | grep -q .; then
+    echo "Access your application at:"
+    echo "  http://localhost:$HTTP_PORT"
+    echo ""
+else
+    echo "Access your application at:"
+    echo "  http://localhost:$HTTP_PORT"
+    echo ""
+fi
+
+echo "Alternative: Use port-forward for standard ports:"
+echo "  kubectl port-forward service/multi-platform-nginx 8080:80 8081:8081"
+echo "  Then access: http://localhost:8080"
+echo ""
+
 echo "To view logs:"
 echo "  kubectl logs -l app=multi-platform-dotnet"
 echo "  kubectl logs -l app=multi-platform-nodejs"
@@ -75,6 +102,9 @@ echo "  kubectl logs -l app=multi-platform-java"
 echo "  kubectl logs -l app=multi-platform-go"
 echo "  kubectl logs -l app=multi-platform-websocket"
 echo "  kubectl logs -l app=multi-platform-nginx"
+echo ""
+echo "To diagnose issues:"
+echo "  ./diagnose-k8s.sh"
 echo ""
 echo "To uninstall:"
 echo "  helm uninstall multi-platform"
