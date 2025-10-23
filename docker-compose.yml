@@ -26,6 +26,19 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     networks:
       - app-network
+    develop:
+      watch:
+        - action: sync
+          path: ./dotnet
+          target: /app
+          ignore:
+            - bin/
+            - obj/
+        - action: sync
+          path: ./shared
+          target: /shared
+        - action: rebuild
+          path: ./dotnet/HelloWorld.csproj
 
   nodejs:
     build:
@@ -34,6 +47,18 @@ services:
     container_name: multi-platform-nodejs
     networks:
       - app-network
+    develop:
+      watch:
+        - action: sync
+          path: ./nodejs
+          target: /app
+          ignore:
+            - node_modules/
+        - action: sync
+          path: ./shared
+          target: /shared
+        - action: rebuild
+          path: ./nodejs/package.json
 
   python:
     build:
@@ -42,6 +67,19 @@ services:
     container_name: multi-platform-python
     networks:
       - app-network
+    develop:
+      watch:
+        - action: sync
+          path: ./python
+          target: /app
+          ignore:
+            - __pycache__/
+            - "*.pyc"
+        - action: sync
+          path: ./shared
+          target: /shared
+        - action: rebuild
+          path: ./python/requirements.txt
 
   java:
     build:
@@ -50,6 +88,15 @@ services:
     container_name: multi-platform-java
     networks:
       - app-network
+    develop:
+      watch:
+        - action: rebuild
+          path: ./java/src
+        - action: rebuild
+          path: ./java/pom.xml
+        - action: sync
+          path: ./shared
+          target: /shared
 
   go:
     build:
@@ -58,6 +105,15 @@ services:
     container_name: multi-platform-go
     networks:
       - app-network
+    develop:
+      watch:
+        - action: rebuild
+          path: ./go
+          ignore:
+            - "*.exe"
+        - action: sync
+          path: ./shared
+          target: /shared
 
   websocket:
     build:
@@ -66,6 +122,15 @@ services:
     container_name: multi-platform-websocket
     networks:
       - app-network
+    develop:
+      watch:
+        - action: sync
+          path: ./websocket
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./websocket/package.json
 
 networks:
   app-network:

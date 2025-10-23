@@ -10,6 +10,7 @@ A unique Hello World website implemented in 5 of the most popular programming la
 - **WebSocket Communication**: Live synchronization across all connected users
 - **Docker-Powered**: Easy deployment using Docker Compose
 - **Nginx Routing**: Intelligent reverse proxy for seamless navigation
+- **Hot Reload Development**: Watch mode with automatic file syncing and rebuilds
 
 ## Platforms
 
@@ -88,6 +89,39 @@ docker-compose up --build
    - http://localhost:8080/go/canvas - Canvas via Go
 
    All canvas routes share the SAME drawing surface in real-time!
+
+### Development with Watch Mode (Hot Reload)
+
+For a smooth development experience with automatic file syncing and hot-reloading:
+
+```bash
+docker-compose up --watch
+```
+
+This enables automatic updates when you edit code:
+
+**Instant Sync (No Rebuild):**
+- **.NET**: Changes to `.cs` files sync automatically
+- **Node.js**: Changes to `.js` files sync and server restarts
+- **Python**: Changes to `.py` files sync and Flask reloads
+- **WebSocket**: Changes to `.js` files sync and server restarts
+- **Shared Templates**: Changes to HTML templates sync to all services instantly!
+
+**Automatic Rebuild:**
+- **.NET**: Rebuilds when `HelloWorld.csproj` changes
+- **Node.js**: Rebuilds when `package.json` changes
+- **Python**: Rebuilds when `requirements.txt` changes
+- **Java**: Rebuilds when source files or `pom.xml` change
+- **Go**: Rebuilds when `.go` files change
+
+**Example workflow:**
+1. Run `docker-compose up --watch`
+2. Edit `shared/templates/canvas.html` to change the UI
+3. Refresh your browser - changes appear instantly!
+4. Edit `nodejs/server.js` to modify functionality
+5. Server automatically restarts with your changes
+
+This creates a true hot-reload development experience across all 5 platforms!
 
 ### Stopping the Application
 
