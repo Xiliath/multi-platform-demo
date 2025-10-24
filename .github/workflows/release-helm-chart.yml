@@ -99,26 +99,11 @@ jobs:
           # Get chart info
           CHART_VERSION=$(grep '^version:' ../helm/multi-platform-demo/Chart.yaml | awk '{print $2}')
           CHART_NAME=$(grep '^name:' ../helm/multi-platform-demo/Chart.yaml | awk '{print $2}')
-          APP_VERSION=$(grep '^appVersion:' ../helm/multi-platform-demo/Chart.yaml | awk '{print $2}' | tr -d '"')
-          DESCRIPTION=$(grep '^description:' ../helm/multi-platform-demo/Chart.yaml | cut -d' ' -f2-)
-          CREATED=$(date -u +"%Y-%m-%dT%H:%M:%S.000000000Z")
 
-          # Create/update index.yaml
-          cat > index.yaml <<EOF
-          apiVersion: v1
-          entries:
-            $CHART_NAME:
-            - apiVersion: v2
-              appVersion: "$APP_VERSION"
-              created: "$CREATED"
-              description: $DESCRIPTION
-              name: $CHART_NAME
-              type: application
-              urls:
-              - https://github.com/${{ github.repository }}/releases/download/$CHART_NAME-$CHART_VERSION/$CHART_NAME-$CHART_VERSION.tgz
-              version: $CHART_VERSION
-          generated: "$CREATED"
-          EOF
+          # Use helm repo index to properly merge with existing entries
+          # This preserves all previous versions
+          helm repo index . --url https://github.com/${{ github.repository }}/releases/download --merge index.yaml || \
+            helm repo index . --url https://github.com/${{ github.repository }}/releases/download
 
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
