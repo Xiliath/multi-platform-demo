@@ -36,7 +36,7 @@ fn get_join_content() -> String {
 async fn index() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
-        .body(get_html_content("/canvas", "rust"))
+        .body(get_html_content("/rust/canvas", "rust"))
 }
 
 async fn rust_index() -> HttpResponse {
