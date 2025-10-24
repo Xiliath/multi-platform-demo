@@ -2,6 +2,13 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.3.1] - 2025-10-24
+
+### Fixed
+- **CRITICAL**: Rust template paths now use absolute paths (`/shared` instead of `../shared`)
+- Rust container no longer exits immediately on startup
+- Rust platform now works correctly in Kubernetes
+
 ## [1.3.0] - 2025-10-24
 
 ### Added

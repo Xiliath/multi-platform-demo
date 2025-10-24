@@ -2,7 +2,7 @@ use actix_web::{web, App, HttpResponse, HttpServer};
 use std::fs;
 
 fn get_html_content(canvas_path: &str, active_platform: &str) -> String {
-    let template = fs::read_to_string("../shared/templates/index.html")
+    let template = fs::read_to_string("/shared/templates/index.html")
         .expect("Failed to read template");
 
     let version = env!("CARGO_PKG_VERSION");
@@ -22,14 +22,14 @@ fn get_html_content(canvas_path: &str, active_platform: &str) -> String {
 }
 
 fn get_canvas_content() -> String {
-    let template = fs::read_to_string("../shared/templates/canvas.html")
+    let template = fs::read_to_string("/shared/templates/canvas.html")
         .expect("Failed to read canvas template");
 
     template.replace("{{PLATFORM}}", "Rust 1.82")
 }
 
 fn get_join_content() -> String {
-    fs::read_to_string("../shared/templates/join.html")
+    fs::read_to_string("/shared/templates/join.html")
         .expect("Failed to read join template")
 }
 
