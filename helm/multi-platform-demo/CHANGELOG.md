@@ -2,6 +2,13 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.3.3] - 2025-10-24
+
+### Fixed
+- **CRITICAL**: Rust Dockerfile now properly rebuilds with actual source code
+- Fixed Cargo incremental compilation caching issue that caused dummy binary to run
+- Rust container now runs the actual web server instead of empty main()
+
 ## [1.3.2] - 2025-10-24
 
 ### Fixed
