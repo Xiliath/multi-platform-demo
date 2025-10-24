@@ -11,10 +11,14 @@ RUN mkdir src && \
     echo "fn main() {}" > src/main.rs && \
     cargo build --release || true
 
+# Remove the dummy build artifacts to force a clean rebuild
+RUN rm -rf target/release/.fingerprint/hello-world-*
+RUN rm -f target/release/hello-world target/release/hello-world.d
+
 # Copy the actual source code
 COPY rust/src ./src
 
-# Build the application
+# Build the application (this will now rebuild with the real code)
 RUN cargo build --release
 
 # Runtime stage
