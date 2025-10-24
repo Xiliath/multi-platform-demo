@@ -6,6 +6,7 @@ A unique Hello World website implemented in 6 of the most popular programming la
 
 - **Unified Design**: All platforms serve the exact same UI with consistent styling
 - **6 Modern Platforms**: Built with the latest versions of popular programming languages
+- **Headless CMS Ready**: Umbraco Heartcore integration for centralized content management
 - **Real-time Collaborative Canvas**: Draw together with users from all platforms in real-time!
 - **WebSocket Communication**: Live synchronization across all connected users
 - **Docker-Powered**: Easy deployment using Docker Compose
@@ -55,6 +56,11 @@ multi-platform-demo/
 ├── shared/              # Shared resources
 │   └── templates/
 │       └── index.html   # Unified HTML template
+├── umbraco/             # Umbraco Heartcore CMS integration
+│   ├── api-clients/     # API clients for each platform
+│   ├── content-types/   # Content type definitions
+│   ├── config/          # Configuration templates
+│   └── README.md        # Umbraco setup guide
 ├── nginx/               # Nginx configuration
 │   └── nginx.conf
 └── docker-compose.yml   # Orchestration file
@@ -332,6 +338,78 @@ The application uses Nginx as a reverse proxy:
 - High performance
 - Modern async runtime
 
+## Content Management with Umbraco Heartcore
+
+This project includes complete **Umbraco Heartcore** headless CMS integration, allowing you to manage content for all platform home pages from a central location.
+
+### What is Umbraco Heartcore?
+
+Umbraco Heartcore is a headless CMS that provides:
+- Cloud-hosted content management
+- RESTful Content Delivery API
+- User-friendly editor interface
+- Real-time content updates across all platforms
+
+### Quick Setup
+
+1. **Create Umbraco Heartcore Account**
+   - Sign up at [umbraco.com/heartcore](https://umbraco.com/products/umbraco-heartcore/)
+   - Create a new project and note your project alias
+
+2. **Set Up Content Types**
+   - Follow the instructions in `/umbraco/content-types/homePage.json`
+   - Create document types in your Heartcore backoffice
+   - Add and publish your content
+
+3. **Configure Environment Variables**
+   ```bash
+   cp umbraco/config/.env.example .env
+   # Edit .env with your credentials
+   ```
+
+4. **Integrate with Platforms**
+   - API clients are provided for all 6 platforms
+   - See `/umbraco/INTEGRATION_GUIDE.md` for code examples
+
+### Features
+
+- **Centralized Content**: Manage all platform content from one place
+- **API Clients**: Pre-built clients for C#, Node.js, Python, Java, Go, and Rust
+- **Caching**: Built-in 5-minute cache for performance
+- **Fallback**: Automatic fallback to default content if API is unavailable
+- **Environment Config**: Use environment variables for easy deployment
+
+### Documentation
+
+- [Getting Started Guide](umbraco/GETTING_STARTED.md) - Step-by-step setup
+- [Integration Guide](umbraco/INTEGRATION_GUIDE.md) - Code examples for each platform
+- [API Client Documentation](umbraco/README.md) - Client library reference
+- [Content Types](umbraco/content-types/) - Content type definitions
+
+### Example: Fetch Home Page Content
+
+**Node.js:**
+```javascript
+const UmbracoClient = require('./umbraco/api-clients/nodejs/umbraco-client');
+const client = new UmbracoClient();
+const content = await client.fetchHomePage();
+```
+
+**Python:**
+```python
+from umbraco_client import UmbracoClient
+client = UmbracoClient()
+content = client.fetch_home_page()
+```
+
+**C# (.NET):**
+```csharp
+var client = new UmbracoClient();
+var content = await client.FetchHomePageAsync();
+```
+
+See the [Integration Guide](umbraco/INTEGRATION_GUIDE.md) for complete examples for all platforms.
+
 ## Development
 
 ### Adding a New Platform
@@ -339,13 +417,18 @@ The application uses Nginx as a reverse proxy:
 1. Create a new directory for your platform
 2. Implement a web server that serves the shared HTML template
 3. Replace the template variables with platform-specific values
-4. Create a Dockerfile
-5. Add the service to `docker-compose.yml`
-6. Update the Nginx configuration
+4. Integrate the Umbraco API client (optional)
+5. Create a Dockerfile
+6. Add the service to `docker-compose.yml`
+7. Update the Nginx configuration
 
 ### Customizing the UI
 
+**Static Approach:**
 Edit `shared/templates/index.html` to modify the design. All platforms will automatically use the updated template.
+
+**CMS Approach:**
+Use Umbraco Heartcore to manage content dynamically. Edit content in the Heartcore backoffice and it will be served to all platforms via API.
 
 ## Deployment Options
 
@@ -386,6 +469,8 @@ Each platform can run independently. See "Running Individual Platforms" section 
 ## Documentation
 
 - [Helm Chart Documentation](helm/README.md) - Kubernetes deployment guide
+- [Umbraco Getting Started](umbraco/GETTING_STARTED.md) - Headless CMS setup
+- [Umbraco Integration Guide](umbraco/INTEGRATION_GUIDE.md) - Platform integration examples
 - [Troubleshooting Guide](helm/README.md#troubleshooting) - Common issues and solutions
 - [Changelog](helm/multi-platform-demo/CHANGELOG.md) - Version history
 

@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Home Page Content Type",
+  "description": "Document type definition for the multi-platform demo home page",
+  "umbracoContentType": {
+    "name": "Home Page",
+    "alias": "homePage",
+    "icon": "icon-home",
+    "allowedAsRoot": true,
+    "allowedTemplates": [],
+    "defaultTemplate": null,
+    "isElement": false,
+    "compositions": [],
+    "properties": [
+      {
+        "name": "Heading",
+        "alias": "heading",
+        "description": "Main heading displayed on the home page",
+        "dataType": "Textstring",
+        "validation": {
+          "required": true,
+          "pattern": null
+        },
+        "defaultValue": "Hello World!",
+        "tab": "Content"
+      },
+      {
+        "name": "Description",
+        "alias": "description",
+        "description": "Brief description or tagline for the home page",
+        "dataType": "Textarea",
+        "validation": {
+          "required": false,
+          "maxLength": 500
+        },
+        "defaultValue": "Welcome to our multi-platform demo showcasing C# (.NET), Node.js, Python, Java, Go, and Rust implementations.",
+        "tab": "Content"
+      },
+      {
+        "name": "Canvas Section Title",
+        "alias": "canvasSectionTitle",
+        "description": "Title for the collaborative canvas section",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": "Collaborative Canvas",
+        "tab": "Content"
+      },
+      {
+        "name": "Canvas Description",
+        "alias": "canvasDescription",
+        "description": "Description for the collaborative canvas feature",
+        "dataType": "Textarea",
+        "validation": {
+          "required": false,
+          "maxLength": 500
+        },
+        "defaultValue": "Try our real-time collaborative drawing canvas! Draw together with others across different platforms.",
+        "tab": "Content"
+      },
+      {
+        "name": "Launch Canvas Button Text",
+        "alias": "launchCanvasButtonText",
+        "description": "Text for the canvas launch button",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": "Launch Canvas",
+        "tab": "Content"
+      },
+      {
+        "name": "Show QR Code Section",
+        "alias": "showQrCodeSection",
+        "description": "Toggle to show/hide the QR code section",
+        "dataType": "True/false",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": true,
+        "tab": "Content"
+      },
+      {
+        "name": "QR Code Button Text",
+        "alias": "qrCodeButtonText",
+        "description": "Text for the QR code generator button",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": "Show QR Codes",
+        "tab": "Content"
+      },
+      {
+        "name": "Platform Links Title",
+        "alias": "platformLinksTitle",
+        "description": "Title for the platform links section",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": "Try Other Platforms",
+        "tab": "Content"
+      },
+      {
+        "name": "Show Platform Navigation",
+        "alias": "showPlatformNavigation",
+        "description": "Toggle to show/hide platform navigation links",
+        "dataType": "True/false",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": true,
+        "tab": "Settings"
+      },
+      {
+        "name": "Show Server Info",
+        "alias": "showServerInfo",
+        "description": "Toggle to show/hide server information (platform, version, timestamp)",
+        "dataType": "True/false",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": true,
+        "tab": "Settings"
+      },
+      {
+        "name": "Custom CSS",
+        "alias": "customCss",
+        "description": "Custom CSS styles to apply to the home page",
+        "dataType": "Textarea",
+        "validation": {
+          "required": false,
+          "maxLength": 5000
+        },
+        "defaultValue": "",
+        "tab": "Styling"
+      },
+      {
+        "name": "Background Gradient Start",
+        "alias": "backgroundGradientStart",
+        "description": "Start color for the background gradient (hex color)",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false,
+          "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        },
+        "defaultValue": "#667eea",
+        "tab": "Styling"
+      },
+      {
+        "name": "Background Gradient End",
+        "alias": "backgroundGradientEnd",
+        "description": "End color for the background gradient (hex color)",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false,
+          "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        },
+        "defaultValue": "#764ba2",
+        "tab": "Styling"
+      },
+      {
+        "name": "SEO Title",
+        "alias": "seoTitle",
+        "description": "Page title for SEO (shown in browser tab and search results)",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false,
+          "maxLength": 70
+        },
+        "defaultValue": "Multi-Platform Demo",
+        "tab": "SEO"
+      },
+      {
+        "name": "SEO Description",
+        "alias": "seoDescription",
+        "description": "Meta description for SEO",
+        "dataType": "Textarea",
+        "validation": {
+          "required": false,
+          "maxLength": 160
+        },
+        "defaultValue": "A demonstration of the same application built with multiple platforms: C# (.NET), Node.js, Python, Java, Go, and Rust.",
+        "tab": "SEO"
+      },
+      {
+        "name": "SEO Keywords",
+        "alias": "seoKeywords",
+        "description": "Meta keywords for SEO (comma-separated)",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false,
+          "maxLength": 255
+        },
+        "defaultValue": "multi-platform, C#, .NET, Node.js, Python, Java, Go, Rust, demo, collaborative canvas",
+        "tab": "SEO"
+      }
+    ]
+  },
+  "setup": {
+    "instructions": [
+      "1. Log in to your Umbraco Heartcore backoffice",
+      "2. Navigate to Settings → Document Types",
+      "3. Click 'Create' → 'Document Type'",
+      "4. Use the following configuration:",
+      "   - Name: Home Page",
+      "   - Alias: homePage",
+      "   - Icon: icon-home",
+      "   - Allow at root: Yes",
+      "5. Add the properties listed above organized in tabs:",
+      "   - Content tab: Main content fields",
+      "   - Settings tab: Feature toggles",
+      "   - Styling tab: Visual customization",
+      "   - SEO tab: Search engine optimization",
+      "6. Save the document type",
+      "7. Navigate to Content and create a new 'Home Page' document",
+      "8. Fill in the content and publish"
+    ]
+  }
+}

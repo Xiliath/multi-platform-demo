@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Platform Configuration Content Type",
+  "description": "Document type definition for individual platform configurations",
+  "umbracoContentType": {
+    "name": "Platform Config",
+    "alias": "platformConfig",
+    "icon": "icon-settings",
+    "allowedAsRoot": true,
+    "allowedTemplates": [],
+    "defaultTemplate": null,
+    "isElement": false,
+    "compositions": [],
+    "properties": [
+      {
+        "name": "Platform Name",
+        "alias": "platformName",
+        "description": "Name of the platform (e.g., 'C# (.NET 9.0)', 'Node.js', 'Python')",
+        "dataType": "Textstring",
+        "validation": {
+          "required": true
+        },
+        "defaultValue": "",
+        "tab": "General"
+      },
+      {
+        "name": "Platform Key",
+        "alias": "platformKey",
+        "description": "Unique identifier for the platform (e.g., 'dotnet', 'nodejs', 'python')",
+        "dataType": "Textstring",
+        "validation": {
+          "required": true,
+          "pattern": "^[a-z]+$"
+        },
+        "defaultValue": "",
+        "tab": "General"
+      },
+      {
+        "name": "Display Name",
+        "alias": "displayName",
+        "description": "Display name shown in navigation and badges",
+        "dataType": "Textstring",
+        "validation": {
+          "required": true
+        },
+        "defaultValue": "",
+        "tab": "General"
+      },
+      {
+        "name": "Version",
+        "alias": "version",
+        "description": "Language/runtime version (e.g., '9.0', '20.x', '3.13')",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": "",
+        "tab": "General"
+      },
+      {
+        "name": "Route Path",
+        "alias": "routePath",
+        "description": "URL path for this platform (e.g., '/', '/nodejs', '/python')",
+        "dataType": "Textstring",
+        "validation": {
+          "required": true,
+          "pattern": "^/[a-z]*$"
+        },
+        "defaultValue": "/",
+        "tab": "General"
+      },
+      {
+        "name": "Port",
+        "alias": "port",
+        "description": "Internal port number for this platform",
+        "dataType": "Numeric",
+        "validation": {
+          "required": true,
+          "min": 1000,
+          "max": 65535
+        },
+        "defaultValue": 5000,
+        "tab": "General"
+      },
+      {
+        "name": "Badge Color",
+        "alias": "badgeColor",
+        "description": "Color for the platform badge (hex color)",
+        "dataType": "Textstring",
+        "validation": {
+          "required": false,
+          "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        },
+        "defaultValue": "#667eea",
+        "tab": "Styling"
+      },
+      {
+        "name": "Enabled",
+        "alias": "enabled",
+        "description": "Enable or disable this platform",
+        "dataType": "True/false",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": true,
+        "tab": "Settings"
+      },
+      {
+        "name": "Show in Navigation",
+        "alias": "showInNavigation",
+        "description": "Display this platform in the navigation menu",
+        "dataType": "True/false",
+        "validation": {
+          "required": false
+        },
+        "defaultValue": true,
+        "tab": "Settings"
+      },
+      {
+        "name": "Sort Order",
+        "alias": "sortOrder",
+        "description": "Order in which this platform appears in navigation (lower numbers first)",
+        "dataType": "Numeric",
+        "validation": {
+          "required": false,
+          "min": 0,
+          "max": 100
+        },
+        "defaultValue": 0,
+        "tab": "Settings"
+      }
+    ]
+  },
+  "setup": {
+    "instructions": [
+      "1. Log in to your Umbraco Heartcore backoffice",
+      "2. Navigate to Settings → Document Types",
+      "3. Click 'Create' → 'Document Type'",
+      "4. Use the following configuration:",
+      "   - Name: Platform Config",
+      "   - Alias: platformConfig",
+      "   - Icon: icon-settings",
+      "   - Allow at root: Yes",
+      "5. Add the properties listed above organized in tabs",
+      "6. Save the document type",
+      "7. Create platform configurations for each platform:",
+      "   - C# (.NET 9.0) - key: dotnet, route: /, port: 5000",
+      "   - Node.js - key: nodejs, route: /nodejs, port: 5001",
+      "   - Python - key: python, route: /python, port: 5002",
+      "   - Java - key: java, route: /java, port: 5003",
+      "   - Go - key: go, route: /go, port: 5004",
+      "   - Rust - key: rust, route: /rust, port: 5005"
+    ]
+  }
+}
