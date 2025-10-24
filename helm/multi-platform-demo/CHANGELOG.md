@@ -2,6 +2,11 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.3.2] - 2025-10-24
+
+### Fixed
+- Rust index handler now correctly links to `/rust/canvas` instead of `/canvas`
+
 ## [1.3.1] - 2025-10-24
 
 ### Fixed
