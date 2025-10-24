@@ -2,20 +2,33 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
-## [1.1.2] - 2025-10-23
+## [1.3.0] - 2025-10-24
+
+### Added
+- **NEW**: Rust 1.82 platform with Actix-web framework (6th platform!)
+- Rust Helm chart with Deployment and Service resources
+- Rust routes in nginx ConfigMap (/rust, /rust/canvas)
+- Automated GitHub Actions workflow for building and publishing container images
+- Workflow automatically extracts version from Chart.yaml for consistent tagging
+- Container images published to GitHub Container Registry (ghcr.io)
 
 ### Fixed
 - **CRITICAL**: Added `ghcr.io/xiliath/` registry prefix to all image repositories
 - Images can now be pulled from GitHub Container Registry successfully
 - Fixed ImagePullBackOff errors when deploying from Helm repository
+- Image deployment now works correctly with public registry
+- Workflow path filters now include `helm/**` to trigger builds on appVersion changes
 
 ### Changed
 - Image repositories now use full path: `ghcr.io/xiliath/multi-platform-*`
-- All image tags updated from `1.1.1` to `1.1.2` for consistency
-- appVersion updated to `1.1.2` to match chart version
+- All imagePullPolicy changed from `IfNotPresent` to `Always` for reliable updates
+- All platforms updated to support Rust navigation
+- Increased total platform count from 5 to 6
+- Updated all documentation for 6 platforms
 
-### Added
-- Rust platform image will be built and published as `1.1.2` when merged to main
+### Removed
+- All obsolete build and installation scripts (automated via GitHub Actions)
+- Redundant troubleshooting scripts (commands documented in helm/README.md)
 
 ## [1.1.1] - 2025-10-23
 
