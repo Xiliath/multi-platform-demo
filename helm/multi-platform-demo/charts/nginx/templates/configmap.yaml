@@ -11,6 +11,12 @@ data:
     }
 
     http {
+        # Map for admin authentication - DRY approach
+        map $http_x_admin_secret $admin_allowed {
+            default 0;
+            "my-demo-secret-2025" 1;
+        }
+
         upstream dotnet {
             server {{ $.Release.Name }}-dotnet:5000;
         }
@@ -90,8 +96,7 @@ data:
 
             # Admin page route (default to .NET) - WITH SECRET HEADER
             location = /admin {
-                # Check for secret header
-                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                if ($admin_allowed = 0) {
                     return 302 /blocked;
                 }
 
@@ -137,7 +142,7 @@ data:
             }
 
             location = /nodejs/admin {
-                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                if ($admin_allowed = 0) {
                     return 302 /blocked;
                 }
 
@@ -182,7 +187,7 @@ data:
             }
 
             location = /python/admin {
-                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                if ($admin_allowed = 0) {
                     return 302 /blocked;
                 }
 
@@ -227,7 +232,7 @@ data:
             }
 
             location = /java/admin {
-                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                if ($admin_allowed = 0) {
                     return 302 /blocked;
                 }
 
@@ -272,7 +277,7 @@ data:
             }
 
             location = /go/admin {
-                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                if ($admin_allowed = 0) {
                     return 302 /blocked;
                 }
 
@@ -317,7 +322,7 @@ data:
             }
 
             location = /rust/admin {
-                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                if ($admin_allowed = 0) {
                     return 302 /blocked;
                 }
 
