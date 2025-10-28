@@ -11,6 +11,12 @@ data:
     }
 
     http {
+        # Map for admin authentication - DRY approach
+        map $http_x_admin_secret $admin_allowed {
+            default 0;
+            "my-demo-secret-2025" 1;
+        }
+
         upstream dotnet {
             server {{ $.Release.Name }}-dotnet:5000;
         }
@@ -42,6 +48,15 @@ data:
         server {
             listen 80;
             server_name localhost;
+
+            # Blocked page for unauthorized access
+            location = /blocked {
+                proxy_pass http://dotnet/blocked;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
 
             # Default route to .NET
             location = / {
@@ -79,18 +94,13 @@ data:
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
 
-            # Admin page route (default to .NET)
+            # Admin page route (default to .NET) - WITH SECRET HEADER
             location = /admin {
-                proxy_pass http://dotnet/admin;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
+                if ($admin_allowed = 0) {
+                    return 302 /blocked;
+                }
 
-            # Register QR page route (default to .NET)
-            location = /register-qr {
-                proxy_pass http://dotnet/register-qr;
+                proxy_pass http://dotnet/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -123,15 +133,11 @@ data:
             }
 
             location = /nodejs/admin {
-                proxy_pass http://nodejs/admin;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
+                if ($admin_allowed = 0) {
+                    return 302 /blocked;
+                }
 
-            location = /nodejs/register-qr {
-                proxy_pass http://nodejs/register-qr;
+                proxy_pass http://nodejs/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -164,15 +170,11 @@ data:
             }
 
             location = /python/admin {
-                proxy_pass http://python/admin;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
+                if ($admin_allowed = 0) {
+                    return 302 /blocked;
+                }
 
-            location = /python/register-qr {
-                proxy_pass http://python/register-qr;
+                proxy_pass http://python/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -205,15 +207,11 @@ data:
             }
 
             location = /java/admin {
-                proxy_pass http://java/admin;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
+                if ($admin_allowed = 0) {
+                    return 302 /blocked;
+                }
 
-            location = /java/register-qr {
-                proxy_pass http://java/register-qr;
+                proxy_pass http://java/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -246,15 +244,11 @@ data:
             }
 
             location = /go/admin {
-                proxy_pass http://go/admin;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
+                if ($admin_allowed = 0) {
+                    return 302 /blocked;
+                }
 
-            location = /go/register-qr {
-                proxy_pass http://go/register-qr;
+                proxy_pass http://go/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -287,6 +281,10 @@ data:
             }
 
             location = /rust/admin {
+                if ($admin_allowed = 0) {
+                    return 302 /blocked;
+                }
+
                 proxy_pass http://rust/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -294,13 +292,6 @@ data:
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
 
-            location = /rust/register-qr {
-                proxy_pass http://rust/register-qr;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
         }
 
         # WebSocket server on port 8081

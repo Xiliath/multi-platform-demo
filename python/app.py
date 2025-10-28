@@ -64,13 +64,6 @@ def admin():
         template = f.read()
     return template.replace('{{PLATFORM}}', 'Python (Flask)')
 
-@app.route('/register-qr')
-@app.route('/python/register-qr')
-def register_qr():
-    template_path = os.path.join(os.path.dirname(__file__), '../shared/templates/register-qr.html')
-    with open(template_path, 'r') as f:
-        return f.read()
-
 @app.route('/blocked')
 @app.route('/python/blocked')
 def blocked():

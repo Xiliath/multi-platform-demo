@@ -40,11 +40,6 @@ string GetAdminContent()
     return template.Replace("{{PLATFORM}}", "C# (.NET 9.0)");
 }
 
-string GetRegisterQrContent()
-{
-    return File.ReadAllText("../shared/templates/register-qr.html");
-}
-
 string GetBlockedContent()
 {
     return File.ReadAllText("../shared/templates/blocked.html");
@@ -55,7 +50,6 @@ app.MapGet("/canvas", () => Results.Content(GetCanvasContent(), "text/html"));
 app.MapGet("/join", () => Results.Content(GetJoinContent(), "text/html"));
 app.MapGet("/registration", () => Results.Content(GetRegistrationContent(), "text/html"));
 app.MapGet("/admin", () => Results.Content(GetAdminContent(), "text/html"));
-app.MapGet("/register-qr", () => Results.Content(GetRegisterQrContent(), "text/html"));
 app.MapGet("/blocked", () => Results.Content(GetBlockedContent(), "text/html"));
 
 app.Run();
