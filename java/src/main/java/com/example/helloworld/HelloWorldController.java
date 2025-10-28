@@ -65,11 +65,6 @@ public class HelloWorldController {
         return template.replace("{{PLATFORM}}", "Java (Spring Boot)");
     }
 
-    @GetMapping(value = {"/register-qr", "/java/register-qr"}, produces = "text/html")
-    public String registerQr() throws IOException {
-        return Files.readString(Paths.get("../shared/templates/register-qr.html"));
-    }
-
     @GetMapping(value = {"/blocked", "/java/blocked"}, produces = "text/html")
     public String blocked() throws IOException {
         return Files.readString(Paths.get("../shared/templates/blocked.html"));

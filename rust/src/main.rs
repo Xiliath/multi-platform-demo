@@ -47,11 +47,6 @@ fn get_admin_content() -> String {
     template.replace("{{PLATFORM}}", "Rust 1.83")
 }
 
-fn get_register_qr_content() -> String {
-    fs::read_to_string("/shared/templates/register-qr.html")
-        .expect("Failed to read register-qr template")
-}
-
 fn get_blocked_content() -> String {
     fs::read_to_string("/shared/templates/blocked.html")
         .expect("Failed to read blocked template")
@@ -117,18 +112,6 @@ async fn rust_admin() -> HttpResponse {
         .body(get_admin_content())
 }
 
-async fn register_qr() -> HttpResponse {
-    HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(get_register_qr_content())
-}
-
-async fn rust_register_qr() -> HttpResponse {
-    HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(get_register_qr_content())
-}
-
 async fn blocked() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
@@ -157,8 +140,6 @@ async fn main() -> std::io::Result<()> {
             .route("/rust/registration", web::get().to(rust_registration))
             .route("/admin", web::get().to(admin))
             .route("/rust/admin", web::get().to(rust_admin))
-            .route("/register-qr", web::get().to(register_qr))
-            .route("/rust/register-qr", web::get().to(rust_register_qr))
             .route("/blocked", web::get().to(blocked))
             .route("/rust/blocked", web::get().to(rust_blocked))
     })

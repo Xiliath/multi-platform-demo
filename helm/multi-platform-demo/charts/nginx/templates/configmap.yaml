@@ -107,15 +107,6 @@ data:
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
 
-            # Register QR page route (default to .NET)
-            location = /register-qr {
-                proxy_pass http://dotnet/register-qr;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
-
             # Node.js routes
             location = /nodejs {
                 proxy_pass http://nodejs/;
@@ -147,14 +138,6 @@ data:
                 }
 
                 proxy_pass http://nodejs/admin;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
-
-            location = /nodejs/register-qr {
-                proxy_pass http://nodejs/register-qr;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -198,14 +181,6 @@ data:
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
 
-            location = /python/register-qr {
-                proxy_pass http://python/register-qr;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
-
             # Java routes
             location = /java {
                 proxy_pass http://java/;
@@ -237,14 +212,6 @@ data:
                 }
 
                 proxy_pass http://java/admin;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
-
-            location = /java/register-qr {
-                proxy_pass http://java/register-qr;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -288,14 +255,6 @@ data:
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
 
-            location = /go/register-qr {
-                proxy_pass http://go/register-qr;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
-
             # Rust routes
             location = /rust {
                 proxy_pass http://rust/;
@@ -333,13 +292,6 @@ data:
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
 
-            location = /rust/register-qr {
-                proxy_pass http://rust/register-qr;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-            }
         }
 
         # WebSocket server on port 8081

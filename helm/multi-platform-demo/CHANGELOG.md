@@ -2,6 +2,36 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.6.0] - 2025-10-28
+
+### Security
+- **NEW**: Admin routes now protected with secret header authentication
+- Admin panel requires `X-Admin-Secret: my-demo-secret-2025` header to access
+- Unauthorized admin access redirects to `/blocked` page
+- All 6 platform-specific admin routes secured: `/admin`, `/nodejs/admin`, `/python/admin`, `/java/admin`, `/go/admin`, `/rust/admin`
+
+### Changed
+- Signup link and QR code now correctly point to `/registration` instead of `/register-qr`
+- Refactored nginx configuration using `map` directive for DRY admin authentication
+- Secret validation now defined once at http level instead of repeated in each location
+
+### Removed
+- Removed unused `/register-qr` routes from all 6 backend platforms
+- Removed `/register-qr` location blocks from nginx configuration
+- Deleted unused `register-qr.html` template file
+
+### Technical Details
+- Admin authentication uses nginx `map $http_x_admin_secret $admin_allowed` for single source of truth
+- Reduced code duplication in nginx config (42 lines removed)
+- Cleaner, more maintainable security configuration
+- All Docker image tags updated to 1.6.0
+
+### How to Access Admin Panel
+Users must install a browser header modification extension:
+- Chrome/Edge: ModHeader or Requestly
+- Firefox: Modify Header Value
+- Add header: `X-Admin-Secret: my-demo-secret-2025`
+
 ## [1.5.0] - 2025-10-28
 
 ### Added

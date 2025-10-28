@@ -100,16 +100,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		html := strings.Replace(string(data), "{{PLATFORM}}", "Go", -1)
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprint(w, html)
-	} else if r.URL.Path == "/register-qr" || r.URL.Path == "/go/register-qr" {
-		data, err := os.ReadFile("../shared/templates/register-qr.html")
-		if err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-			log.Printf("Error reading register-qr template: %v", err)
-			return
-		}
-
-		w.Header().Set("Content-Type", "text/html")
-		fmt.Fprint(w, string(data))
 	} else if r.URL.Path == "/blocked" || r.URL.Path == "/go/blocked" {
 		data, err := os.ReadFile("../shared/templates/blocked.html")
 		if err != nil {
