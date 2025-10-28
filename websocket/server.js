@@ -12,6 +12,9 @@ let clientIdCounter = 0;
 const canvasHistory = [];
 const MAX_HISTORY = 1000;
 
+// Store registrations in memory
+const registrations = [];
+
 console.log('WebSocket server starting...');
 
 wss.on('connection', (ws) => {
@@ -74,6 +77,59 @@ wss.on('connection', (ws) => {
                         clientId: clientId
                     }, clientId);
                     console.log(`Canvas cleared by client ${clientId}`);
+                    break;
+
+                case 'register':
+                    // Handle new registration
+                    const registration = {
+                        email: data.email,
+                        platform: data.platform,
+                        timestamp: data.timestamp || new Date().toISOString()
+                    };
+
+                    // Validate email format
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(registration.email)) {
+                        ws.send(JSON.stringify({
+                            type: 'registration_error',
+                            message: 'Invalid email format'
+                        }));
+                        break;
+                    }
+
+                    // Check for duplicate email
+                    const duplicate = registrations.find(r => r.email === registration.email);
+                    if (duplicate) {
+                        ws.send(JSON.stringify({
+                            type: 'registration_error',
+                            message: 'This email is already registered'
+                        }));
+                        break;
+                    }
+
+                    // Add registration
+                    registrations.push(registration);
+                    console.log(`New registration: ${registration.email} (${registration.platform})`);
+
+                    // Send success to registrant
+                    ws.send(JSON.stringify({
+                        type: 'registration_success'
+                    }));
+
+                    // Broadcast to all clients (for admin view updates)
+                    broadcast({
+                        type: 'new_registration',
+                        registration: registration
+                    });
+                    break;
+
+                case 'get_registrations':
+                    // Send current registrations list to client (for admin view)
+                    ws.send(JSON.stringify({
+                        type: 'registrations_list',
+                        registrations: registrations
+                    }));
+                    console.log(`Sent ${registrations.length} registrations to client ${clientId}`);
                     break;
             }
         } catch (error) {

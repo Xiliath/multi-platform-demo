@@ -48,5 +48,28 @@ def join():
     with open(template_path, 'r') as f:
         return f.read()
 
+@app.route('/registration')
+@app.route('/python/registration')
+def registration():
+    template_path = os.path.join(os.path.dirname(__file__), '../shared/templates/registration.html')
+    with open(template_path, 'r') as f:
+        template = f.read()
+    return template.replace('{{PLATFORM}}', 'Python (Flask)')
+
+@app.route('/admin')
+@app.route('/python/admin')
+def admin():
+    template_path = os.path.join(os.path.dirname(__file__), '../shared/templates/admin.html')
+    with open(template_path, 'r') as f:
+        template = f.read()
+    return template.replace('{{PLATFORM}}', 'Python (Flask)')
+
+@app.route('/register-qr')
+@app.route('/python/register-qr')
+def register_qr():
+    template_path = os.path.join(os.path.dirname(__file__), '../shared/templates/register-qr.html')
+    with open(template_path, 'r') as f:
+        return f.read()
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002, debug=False)

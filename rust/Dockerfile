@@ -1,5 +1,5 @@
 # Rust Implementation
-FROM rust:1.82 as builder
+FROM rust:1.83 as builder
 
 WORKDIR /app
 
