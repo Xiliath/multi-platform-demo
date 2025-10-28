@@ -7,6 +7,9 @@ A unique Hello World website implemented in 6 of the most popular programming la
 - **Unified Design**: All platforms serve the exact same UI with consistent styling
 - **6 Modern Platforms**: Built with the latest versions of popular programming languages
 - **Real-time Collaborative Canvas**: Draw together with users from all platforms in real-time!
+- **Beta Testing Registration**: Collect user signups with email and platform selection
+- **Admin Dashboard**: Real-time view of registrations with export functionality
+- **QR Code Access**: Easy mobile registration via scannable QR codes
 - **WebSocket Communication**: Live synchronization across all connected users
 - **Docker-Powered**: Easy deployment using Docker Compose
 - **Nginx Routing**: Intelligent reverse proxy for seamless navigation
@@ -52,9 +55,18 @@ multi-platform-demo/
 │   │   └── main.rs
 │   ├── Cargo.toml
 │   └── Dockerfile
+├── websocket/           # WebSocket server for real-time features
+│   ├── server.js        # Canvas & registration sync
+│   ├── package.json
+│   └── Dockerfile
 ├── shared/              # Shared resources
 │   └── templates/
-│       └── index.html   # Unified HTML template
+│       ├── index.html          # Unified HTML template
+│       ├── canvas.html         # Collaborative canvas
+│       ├── join.html           # QR codes for canvas
+│       ├── registration.html   # Beta testing registration form
+│       ├── admin.html          # Admin dashboard
+│       └── register-qr.html    # QR code for registration
 ├── nginx/               # Nginx configuration
 │   └── nginx.conf
 └── docker-compose.yml   # Orchestration file
@@ -144,6 +156,11 @@ docker-compose up --build
    - http://localhost:8080/rust/canvas - Canvas via Rust
 
    All canvas routes share the SAME drawing surface in real-time!
+
+   **Beta Testing Registration:**
+   - http://localhost:8080/registration - User registration form
+   - http://localhost:8080/admin - Admin dashboard with registration list
+   - http://localhost:8080/register-qr - QR code for mobile registration
 
 ### Development with Watch Mode (Hot Reload)
 
@@ -279,6 +296,110 @@ Perfect for live demos and presentations! Allow attendees to join from their pho
 - Automatically uses your computer's IP address
 - Shows helpful setup instructions if accessed via localhost
 - Works on phones, tablets, and any device with a camera
+
+## Beta Testing Registration System
+
+The application includes a complete registration system for collecting beta tester signups with real-time data synchronization across all platforms.
+
+### Features
+
+- **User Registration**: Simple form collecting email and platform (Android/iOS)
+- **Admin Dashboard**: Real-time view of all registrations with statistics
+- **QR Code Access**: Scannable QR code for easy mobile registration
+- **Real-time Updates**: Admin dashboard updates instantly when users register
+- **Data Export**: Export registrations to CSV for further processing
+- **Duplicate Prevention**: Validates and prevents duplicate email addresses
+- **Cross-Platform**: Works with all 6 backend implementations
+- **In-Memory Storage**: Registrations stored in WebSocket server memory
+
+### How to Use
+
+#### For Users (Registration)
+
+1. **Desktop Access**: Visit `http://localhost:8080/registration`
+2. **Mobile Access**:
+   - Visit `http://YOUR-IP-ADDRESS:8080/register-qr` to display QR code
+   - Scan the QR code with a phone camera
+   - Fill out the registration form
+3. **Enter Email**: Provide a valid email address
+4. **Select Platform**: Choose Android or iOS
+5. **Submit**: Registration is saved instantly
+
+#### For Administrators
+
+1. **Access Dashboard**: Visit `http://localhost:8080/admin`
+2. **View Statistics**: See total signups and breakdown by platform
+3. **Filter Data**: Filter registrations by platform (All/Android/iOS)
+4. **Export Data**: Click "Export CSV" to download registration list
+5. **Live Updates**: Dashboard automatically updates when new users register
+
+### QR Code Setup for Mobile Registration
+
+Perfect for events, demos, and presentations:
+
+**Setup:**
+1. Find your computer's local IP address:
+   - **Windows**: Run `ipconfig` in Command Prompt (look for IPv4 Address)
+   - **Mac/Linux**: Run `ifconfig` or `ip addr` (look for inet address)
+
+2. Visit `http://YOUR-IP-ADDRESS:8080/register-qr` on your computer
+   - Example: `http://192.168.1.100:8080/register-qr`
+
+3. **Display the QR code** on your screen, projector, or print it
+
+4. **Attendees scan** the QR code with their phone's camera
+
+5. **They register** directly from their phones!
+
+**Features:**
+- Large, easily scannable QR code
+- Copy link button for sharing
+- Automatic IP detection
+- Works with any QR code reader or phone camera
+- Helpful setup instructions for localhost environments
+
+### Technical Implementation
+
+**Data Storage:**
+- Registrations stored in WebSocket server memory
+- Shared across all platforms in real-time
+- Persists as long as the WebSocket server is running
+- No database required
+
+**Routes Available:**
+- `/registration` - Registration form (all platforms)
+- `/admin` - Admin dashboard (all platforms)
+- `/register-qr` - QR code page (static, no platform rendering)
+
+**Platform-Specific Routes:**
+- `/nodejs/registration`, `/python/registration`, etc.
+- `/nodejs/admin`, `/python/admin`, etc.
+- Each backend serves the same templates with their platform name
+
+**WebSocket Messages:**
+- `register` - Submit new registration
+- `get_registrations` - Request current registration list
+- `new_registration` - Broadcast when user registers
+- `registrations_list` - Response with all registrations
+
+### Example Use Cases
+
+**Beta Program Launch:**
+1. Share the registration QR code on social media
+2. Monitor signups in real-time via admin dashboard
+3. Export data to CSV for email marketing
+
+**Event Registration:**
+1. Display QR code at your booth or on slides
+2. Attendees register on their phones
+3. Track registrations live during the event
+4. Export data immediately after event
+
+**Product Demo:**
+1. Show the registration page during presentation
+2. Encourage audience to sign up
+3. Display real-time registration count on admin dashboard
+4. Download email list for follow-up
 
 ## Technical Details
 

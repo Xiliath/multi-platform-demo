@@ -2,6 +2,36 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.4.0] - 2025-10-28
+
+### Added
+- **NEW**: Beta Testing Registration System with real-time data synchronization
+- Registration form for collecting email and platform (Android/iOS) signups
+- Admin dashboard with live registration statistics and filtering
+- QR code page for easy mobile registration access
+- Real-time WebSocket updates when users register
+- CSV export functionality in admin dashboard
+- Duplicate email validation
+- Three new templates: `registration.html`, `admin.html`, `register-qr.html`
+- New routes in all 6 backend platforms: `/registration`, `/admin`, `/register-qr`
+- WebSocket message handlers for registration system
+- In-memory registration storage in WebSocket server
+- Platform-specific registration routes (e.g., `/nodejs/registration`)
+
+### Changed
+- Updated nginx ConfigMap with new registration routes for all platforms
+- Enhanced WebSocket server to handle registration messages
+- Updated all 6 backend implementations (.NET, Node.js, Python, Java, Go, Rust)
+- Expanded project documentation with registration system guide
+- Updated README with comprehensive registration feature documentation
+
+### Technical Details
+- Registrations stored in WebSocket server memory (no database required)
+- Cross-platform data sharing via WebSocket
+- Real-time admin dashboard updates
+- Email format validation and duplicate prevention
+- Responsive UI matching existing design language
+
 ## [1.3.3] - 2025-10-24
 
 ### Fixed
