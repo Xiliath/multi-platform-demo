@@ -15,6 +15,7 @@ services:
       - go
       - rust
       - websocket
+      - react-signup
     networks:
       - app-network
 
@@ -149,6 +150,21 @@ services:
             - node_modules/
         - action: rebuild
           path: ./websocket/package.json
+
+  react-signup:
+    build:
+      context: ./react-signup
+      dockerfile: Dockerfile
+    container_name: multi-platform-react-signup
+    networks:
+      - app-network
+    develop:
+      watch:
+        - action: sync
+          path: ./react-signup/src
+          target: /app/src
+        - action: rebuild
+          path: ./react-signup/package.json
 
 networks:
   app-network:

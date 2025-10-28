@@ -22,6 +22,7 @@ A unique Hello World website implemented in 6 of the most popular programming la
 | Java | Java | Spring Boot | 23 | `/java` | 5003 |
 | Go | Go | Native HTTP | 1.23 | `/go` | 5004 |
 | Rust | Rust | Actix-web | 1.82 | `/rust` | 5005 |
+| React Signup | JavaScript | React + Vite | 18.x | `/signup` | 5006 |
 
 ## Project Structure
 
@@ -51,6 +52,14 @@ multi-platform-demo/
 │   ├── src/
 │   │   └── main.rs
 │   ├── Cargo.toml
+│   └── Dockerfile
+├── react-signup/        # React email collector
+│   ├── src/
+│   │   ├── EmailCollector.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── public/
+│   ├── package.json
 │   └── Dockerfile
 ├── shared/              # Shared resources
 │   └── templates/
@@ -144,6 +153,9 @@ docker-compose up --build
    - http://localhost:8080/rust/canvas - Canvas via Rust
 
    All canvas routes share the SAME drawing surface in real-time!
+
+   **AI Speech Trainer Beta Signup:**
+   - http://localhost:8080/signup - Email collection for beta access
 
 ### Development with Watch Mode (Hot Reload)
 
@@ -280,6 +292,39 @@ Perfect for live demos and presentations! Allow attendees to join from their pho
 - Shows helpful setup instructions if accessed via localhost
 - Works on phones, tablets, and any device with a camera
 
+### Email Collection for Beta Access
+
+Perfect for collecting beta tester emails at demos and presentations!
+
+**Features:**
+- **Beautiful UI**: Modern React interface with Tailwind CSS styling
+- **User Registration**: Simple email collection form for beta access
+- **Admin Dashboard**: Toggle to view all collected emails with timestamps
+- **QR Code Generation**: Automatic QR code for easy mobile access
+- **CSV Export**: Download all email signups with timestamps
+- **Real-time Counter**: Shows total number of signups to visitors
+- **Client-side Storage**: All data stored in browser (no backend needed)
+
+**How to Use:**
+
+1. Visit: **http://localhost:8080/signup** (or use your computer's IP)
+2. **For Attendees**: Fill out the email form to register for beta access
+3. **For Admins**: Click the toggle button (top-right corner) to view the admin panel
+4. **Admin Features**:
+   - View all collected emails with timestamps
+   - Generate QR code for easy sharing
+   - Download signups as CSV file
+
+**Demo Workflow:**
+1. Display **http://YOUR-IP:8080/signup** on your screen
+2. Toggle to admin view to show the QR code
+3. Attendees scan the QR code with their phones
+4. They register their email for beta access
+5. Watch the signup counter increase in real-time
+6. Download the CSV file when the event is over
+
+**Note**: Email data is stored in the browser's memory. Download the CSV file before closing the browser to preserve the data.
+
 ## Technical Details
 
 ### Unified UI Design
@@ -331,6 +376,12 @@ The application uses Nginx as a reverse proxy:
 - Memory safety without garbage collection
 - High performance
 - Modern async runtime
+
+**React (18.x + Vite)**
+- Modern React with hooks
+- Fast development with Vite
+- Tailwind CSS for styling
+- Client-side email collection
 
 ## Development
 
