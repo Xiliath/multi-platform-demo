@@ -110,6 +110,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprint(w, string(data))
+	} else if r.URL.Path == "/blocked" || r.URL.Path == "/go/blocked" {
+		data, err := os.ReadFile("../shared/templates/blocked.html")
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			log.Printf("Error reading blocked template: %v", err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprint(w, string(data))
 	} else {
 		http.NotFound(w, r)
 	}

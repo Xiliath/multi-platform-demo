@@ -71,5 +71,12 @@ def register_qr():
     with open(template_path, 'r') as f:
         return f.read()
 
+@app.route('/blocked')
+@app.route('/python/blocked')
+def blocked():
+    template_path = os.path.join(os.path.dirname(__file__), '../shared/templates/blocked.html')
+    with open(template_path, 'r') as f:
+        return f.read()
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002, debug=False)
