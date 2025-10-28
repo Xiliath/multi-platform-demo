@@ -9,7 +9,7 @@ fn get_html_content(canvas_path: &str, active_platform: &str) -> String {
     let timestamp = chrono::Utc::now().format("%Y-%m-%d %H:%M:%S UTC").to_string();
 
     template
-        .replace("{{PLATFORM}}", "Rust 1.82")
+        .replace("{{PLATFORM}}", "Rust 1.83")
         .replace("{{VERSION}}", version)
         .replace("{{TIMESTAMP}}", &timestamp)
         .replace("{{CANVAS_LINK}}", canvas_path)
@@ -25,7 +25,7 @@ fn get_canvas_content() -> String {
     let template = fs::read_to_string("/shared/templates/canvas.html")
         .expect("Failed to read canvas template");
 
-    template.replace("{{PLATFORM}}", "Rust 1.82")
+    template.replace("{{PLATFORM}}", "Rust 1.83")
 }
 
 fn get_join_content() -> String {
@@ -37,14 +37,14 @@ fn get_registration_content() -> String {
     let template = fs::read_to_string("/shared/templates/registration.html")
         .expect("Failed to read registration template");
 
-    template.replace("{{PLATFORM}}", "Rust 1.82")
+    template.replace("{{PLATFORM}}", "Rust 1.83")
 }
 
 fn get_admin_content() -> String {
     let template = fs::read_to_string("/shared/templates/admin.html")
         .expect("Failed to read admin template");
 
-    template.replace("{{PLATFORM}}", "Rust 1.82")
+    template.replace("{{PLATFORM}}", "Rust 1.83")
 }
 
 fn get_register_qr_content() -> String {

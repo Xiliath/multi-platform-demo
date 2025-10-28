@@ -24,7 +24,7 @@ A unique Hello World website implemented in 6 of the most popular programming la
 | Python | Python | Flask | 3.13 | `/python` | 5002 |
 | Java | Java | Spring Boot | 23 | `/java` | 5003 |
 | Go | Go | Native HTTP | 1.23 | `/go` | 5004 |
-| Rust | Rust | Actix-web | 1.82 | `/rust` | 5005 |
+| Rust | Rust | Actix-web | 1.83 | `/rust` | 5005 |
 
 ## Project Structure
 
@@ -448,7 +448,7 @@ The application uses Nginx as a reverse proxy:
 - Excellent performance
 - Built-in concurrency
 
-**Rust (1.82 + Actix-web)**
+**Rust (1.83 + Actix-web)**
 - Memory safety without garbage collection
 - High performance
 - Modern async runtime

@@ -54,7 +54,7 @@ All notable changes to this Helm chart will be documented in this file.
 ## [1.3.0] - 2025-10-24
 
 ### Added
-- **NEW**: Rust 1.82 platform with Actix-web framework (6th platform!)
+- **NEW**: Rust 1.83 platform with Actix-web framework (6th platform!)
 - Rust Helm chart with Deployment and Service resources
 - Rust routes in nginx ConfigMap (/rust, /rust/canvas)
 - Automated GitHub Actions workflow for building and publishing container images
@@ -109,7 +109,7 @@ All notable changes to this Helm chart will be documented in this file.
 ## [1.1.0] - 2025-10-23
 
 ### Added
-- Rust 1.82 platform with Actix-web framework (port 5005)
+- Rust 1.83 platform with Actix-web framework (port 5005)
 - Rust Helm chart with Deployment and Service resources
 - Rust routes in nginx ConfigMap (/rust, /rust/canvas)
 - Rust service configuration in values.yaml
