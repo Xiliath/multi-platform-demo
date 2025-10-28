@@ -52,4 +52,21 @@ public class HelloWorldController {
     public String join() throws IOException {
         return Files.readString(Paths.get("../shared/templates/join.html"));
     }
+
+    @GetMapping(value = {"/registration", "/java/registration"}, produces = "text/html")
+    public String registration() throws IOException {
+        String template = Files.readString(Paths.get("../shared/templates/registration.html"));
+        return template.replace("{{PLATFORM}}", "Java (Spring Boot)");
+    }
+
+    @GetMapping(value = {"/admin", "/java/admin"}, produces = "text/html")
+    public String admin() throws IOException {
+        String template = Files.readString(Paths.get("../shared/templates/admin.html"));
+        return template.replace("{{PLATFORM}}", "Java (Spring Boot)");
+    }
+
+    @GetMapping(value = {"/register-qr", "/java/register-qr"}, produces = "text/html")
+    public String registerQr() throws IOException {
+        return Files.readString(Paths.get("../shared/templates/register-qr.html"));
+    }
 }

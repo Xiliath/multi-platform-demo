@@ -78,6 +78,38 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprint(w, string(data))
+	} else if r.URL.Path == "/registration" || r.URL.Path == "/go/registration" {
+		data, err := os.ReadFile("../shared/templates/registration.html")
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			log.Printf("Error reading registration template: %v", err)
+			return
+		}
+
+		html := strings.Replace(string(data), "{{PLATFORM}}", "Go", -1)
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprint(w, html)
+	} else if r.URL.Path == "/admin" || r.URL.Path == "/go/admin" {
+		data, err := os.ReadFile("../shared/templates/admin.html")
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			log.Printf("Error reading admin template: %v", err)
+			return
+		}
+
+		html := strings.Replace(string(data), "{{PLATFORM}}", "Go", -1)
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprint(w, html)
+	} else if r.URL.Path == "/register-qr" || r.URL.Path == "/go/register-qr" {
+		data, err := os.ReadFile("../shared/templates/register-qr.html")
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			log.Printf("Error reading register-qr template: %v", err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprint(w, string(data))
 	} else {
 		http.NotFound(w, r)
 	}

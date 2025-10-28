@@ -37,6 +37,28 @@ const server = http.createServer((req, res) => {
 
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(html);
+    } else if (req.url === '/registration' || req.url === '/nodejs/registration') {
+        const templatePath = path.join(__dirname, '../shared/templates/registration.html');
+        const template = fs.readFileSync(templatePath, 'utf8');
+
+        const html = template.replace(/{{PLATFORM}}/g, 'Node.js');
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
+    } else if (req.url === '/admin' || req.url === '/nodejs/admin') {
+        const templatePath = path.join(__dirname, '../shared/templates/admin.html');
+        const template = fs.readFileSync(templatePath, 'utf8');
+
+        const html = template.replace(/{{PLATFORM}}/g, 'Node.js');
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
+    } else if (req.url === '/register-qr' || req.url === '/nodejs/register-qr') {
+        const templatePath = path.join(__dirname, '../shared/templates/register-qr.html');
+        const html = fs.readFileSync(templatePath, 'utf8');
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found');
