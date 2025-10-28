@@ -2,6 +2,35 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.5.0] - 2025-10-28
+
+### Added
+- **NEW**: Registration QR code now displayed on homescreen alongside canvas QR
+- **NEW**: IP-based access control for homescreen routes (localhost and internal networks only)
+- **NEW**: Fun "blocked" warning page for unauthorized access attempts
+- Visible admin link on homescreen (honeypot for demo purposes)
+- `/blocked` route added to all 6 backend platforms
+- Nginx IP whitelist configuration with automatic redirect to blocked page
+
+### Changed
+- QR code URL generation now uses `window.location.protocol` and `window.location.host` for dynamic port handling
+- Homescreen layout redesigned with side-by-side QR code sections (canvas and registration)
+- Registration section styled with green gradient for visual distinction
+- All Docker image tags updated to 1.5.0 (dotnet, nodejs, python, java, go, rust, websocket)
+
+### Security
+- Homescreen routes now restricted to:
+  - Localhost: 127.0.0.1
+  - Docker networks: 172.16.0.0/12
+  - Private networks: 10.0.0.0/8, 192.168.0.0/16
+- Unauthorized access redirects to humorous blocked page (demo honeypot)
+
+### Technical Details
+- IP restrictions implemented in nginx configuration using allow/deny directives
+- Error page 403 redirects to @blocked location handler
+- Responsive homescreen design with flex layout for QR code sections
+- Admin panel link intentionally visible for demonstration purposes
+
 ## [1.4.1] - 2025-10-28
 
 ### Fixed

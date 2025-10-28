@@ -69,4 +69,9 @@ public class HelloWorldController {
     public String registerQr() throws IOException {
         return Files.readString(Paths.get("../shared/templates/register-qr.html"));
     }
+
+    @GetMapping(value = {"/blocked", "/java/blocked"}, produces = "text/html")
+    public String blocked() throws IOException {
+        return Files.readString(Paths.get("../shared/templates/blocked.html"));
+    }
 }

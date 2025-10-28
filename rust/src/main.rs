@@ -52,6 +52,11 @@ fn get_register_qr_content() -> String {
         .expect("Failed to read register-qr template")
 }
 
+fn get_blocked_content() -> String {
+    fs::read_to_string("/shared/templates/blocked.html")
+        .expect("Failed to read blocked template")
+}
+
 async fn index() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
@@ -124,6 +129,18 @@ async fn rust_register_qr() -> HttpResponse {
         .body(get_register_qr_content())
 }
 
+async fn blocked() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(get_blocked_content())
+}
+
+async fn rust_blocked() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("text/html; charset=utf-8")
+        .body(get_blocked_content())
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     println!("Starting Rust server on http://0.0.0.0:5005");
@@ -142,6 +159,8 @@ async fn main() -> std::io::Result<()> {
             .route("/rust/admin", web::get().to(rust_admin))
             .route("/register-qr", web::get().to(register_qr))
             .route("/rust/register-qr", web::get().to(rust_register_qr))
+            .route("/blocked", web::get().to(blocked))
+            .route("/rust/blocked", web::get().to(rust_blocked))
     })
     .bind(("0.0.0.0", 5005))?
     .run()

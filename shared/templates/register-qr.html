@@ -277,7 +277,7 @@
 
     <script>
         // Get the current host (will work with local IP)
-        const baseUrl = `http://${window.location.hostname}:8080`;
+        const baseUrl = `${window.location.protocol}//${window.location.host}`;
         const registrationUrl = `${baseUrl}/registration`;
 
         // Generate QR code

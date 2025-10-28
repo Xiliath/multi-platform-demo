@@ -87,6 +87,28 @@
             box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
         }
 
+        .admin-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .admin-link a {
+            text-decoration: none;
+            color: #999;
+            font-size: 0.85em;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .admin-link a:hover {
+            color: #667eea;
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
         .server-info {
             margin-top: 30px;
             padding: 20px;
@@ -116,19 +138,39 @@
             This identical page is being served by {{PLATFORM}}.
         </div>
 
-        <div class="info" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 20px; border-radius: 15px; margin: 30px 0;">
-            <h2 style="margin-bottom: 15px; font-size: 1.5em;">✨ Collaborative Canvas!</h2>
-            <p style="margin-bottom: 20px;">Draw together in real-time with users from all platforms!</p>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+            <div class="info" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 20px; border-radius: 15px; margin: 30px 0; flex: 1; min-width: 300px;">
+                <h2 style="margin-bottom: 15px; font-size: 1.5em;">✨ Collaborative Canvas!</h2>
+                <p style="margin-bottom: 20px;">Draw together in real-time with users from all platforms!</p>
 
-            <div style="display: flex; gap: 30px; justify-content: center; align-items: center; flex-wrap: wrap;">
-                <div style="text-align: center;">
-                    <a href="{{CANVAS_LINK}}" style="display: inline-block; background: white; color: #667eea; padding: 15px 35px; border-radius: 25px; text-decoration: none; font-weight: 700; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 1.1em;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Launch Canvas →</a>
+                <div style="display: flex; gap: 30px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <a href="{{CANVAS_LINK}}" style="display: inline-block; background: white; color: #667eea; padding: 15px 35px; border-radius: 25px; text-decoration: none; font-weight: 700; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 1.1em;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Launch Canvas →</a>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <p style="margin-bottom: 10px; font-size: 0.9em; opacity: 0.95;">📱 Scan to join:</p>
+                        <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                            <div id="qrcode"></div>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <div style="text-align: center;">
-                    <p style="margin-bottom: 10px; font-size: 0.9em; opacity: 0.95;">📱 Scan to join:</p>
-                    <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                        <div id="qrcode"></div>
+            <div class="info" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px 20px; border-radius: 15px; margin: 30px 0; flex: 1; min-width: 300px;">
+                <h2 style="margin-bottom: 15px; font-size: 1.5em;">📝 Beta Testing Sign-Up</h2>
+                <p style="margin-bottom: 20px;">Join our beta program and get early access!</p>
+
+                <div style="display: flex; gap: 30px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <a href="/register-qr" style="display: inline-block; background: white; color: #10b981; padding: 15px 35px; border-radius: 25px; text-decoration: none; font-weight: 700; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 1.1em;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Sign Up →</a>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <p style="margin-bottom: 10px; font-size: 0.9em; opacity: 0.95;">📱 Scan to register:</p>
+                        <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                            <div id="qrcode-registration"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,15 +190,32 @@
             Version: {{VERSION}}<br>
             Timestamp: {{TIMESTAMP}}
         </div>
+
+        <div class="admin-link">
+            <a href="/admin">Admin Panel</a>
+        </div>
     </div>
 
     <script>
-        // Generate QR code immediately on page load
+        // Generate QR codes immediately on page load
         window.addEventListener('DOMContentLoaded', function() {
-            const canvasUrl = `http://${window.location.hostname}:8080{{CANVAS_LINK}}`;
+            const baseUrl = `${window.location.protocol}//${window.location.host}`;
+            const canvasUrl = `${baseUrl}{{CANVAS_LINK}}`;
+            const registrationUrl = `${baseUrl}/registration`;
 
+            // Canvas QR code
             new QRCode(document.getElementById('qrcode'), {
                 text: canvasUrl,
+                width: 128,
+                height: 128,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Registration QR code
+            new QRCode(document.getElementById('qrcode-registration'), {
+                text: registrationUrl,
                 width: 128,
                 height: 128,
                 colorDark: "#000000",

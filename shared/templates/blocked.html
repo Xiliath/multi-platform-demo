@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Restricted</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        .warning-icon {
+            font-size: 8em;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        h1 {
+            color: #e74c3c;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .message {
+            color: #555;
+            font-size: 1.2em;
+            margin: 30px 0;
+            line-height: 1.8;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border: 2px dashed #ffc107;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            color: #856404;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .alert-box strong {
+            display: block;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #664d03;
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        .links {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            text-decoration: none;
+            color: white;
+            background: #667eea;
+            padding: 12px 30px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .links a:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .links a.admin {
+            background: #10b981;
+        }
+
+        .links a.admin:hover {
+            background: #059669;
+        }
+
+        .ip-info {
+            margin-top: 25px;
+            font-family: 'Courier New', monospace;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            .container {
+                padding: 40px 20px;
+            }
+            .warning-icon {
+                font-size: 5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning-icon">🚨</div>
+        <h1>Whoa There, Friend!</h1>
+
+        <div class="message">
+            <p>Looks like you're trying to access the VIP lounge without proper credentials!</p>
+        </div>
+
+        <div class="alert-box">
+            <strong>🔐 Access Restricted</strong>
+            This is a <strong>demo honeypot</strong>! The main homescreen is only accessible from the host machine.
+            <br><br>
+            But hey, since you made it this far, you must be curious...
+        </div>
+
+        <div class="fun-fact">
+            💡 Fun fact: Real honeypots are used to detect and study security threats.
+            This one just wanted to make you smile! 😊
+        </div>
+
+        <div class="links">
+            <a href="/canvas">Try the Canvas →</a>
+            <a href="/registration">Sign Up for Beta</a>
+            <a href="/admin" class="admin">Admin Panel 👀</a>
+        </div>
+
+        <div class="ip-info">
+            Your IP: <span id="user-ip">Detecting...</span>
+            <br>
+            <small>(Just kidding, we're not actually tracking you)</small>
+        </div>
+    </div>
+
+    <script>
+        // Fun fake IP detector (doesn't actually detect)
+        const fakeIPs = [
+            '192.168.1.42',
+            '10.0.0.123',
+            '172.16.0.99',
+            '203.0.113.42',
+            '198.51.100.1'
+        ];
+
+        setTimeout(() => {
+            const randomIP = fakeIPs[Math.floor(Math.random() * fakeIPs.length)];
+            document.getElementById('user-ip').textContent = randomIP;
+        }, 1000);
+    </script>
+</body>
+</html>
