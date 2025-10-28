@@ -2,6 +2,35 @@ apiVersion: v1
 entries:
   multi-platform-demo:
   - apiVersion: v2
+    appVersion: 1.5.0
+    created: "2025-10-28T21:52:04.596550492Z"
+    description: A Helm chart for Multi-Platform Hello World Demo with collaborative
+      canvas and beta testing registration
+    digest: bca715e0778938c2cb4e707aef0f2a3f54047182f8d2b3c6bfb5d891e2fc971d
+    home: https://github.com/Xiliath/multi-platform-demo
+    keywords:
+    - multi-platform
+    - demo
+    - dotnet
+    - nodejs
+    - python
+    - java
+    - golang
+    - rust
+    - websocket
+    - collaborative-canvas
+    - beta-testing
+    - registration-system
+    maintainers:
+    - name: Multi-Platform Demo Team
+    name: multi-platform-demo
+    sources:
+    - https://github.com/Xiliath/multi-platform-demo
+    type: application
+    urls:
+    - https://github.com/Xiliath/multi-platform-demo/releases/download/multi-platform-demo-1.5.0/multi-platform-demo-1.5.0.tgz
+    version: 1.5.0
+  - apiVersion: v2
     appVersion: 1.4.1
     created: "2025-10-28T20:28:08.848262885Z"
     description: A Helm chart for Multi-Platform Hello World Demo with collaborative
@@ -150,4 +179,4 @@ entries:
     urls:
     - https://github.com/Xiliath/multi-platform-demo/releases/download/multi-platform-demo-1.3.0/multi-platform-demo-1.3.0.tgz
     version: 1.3.0
-generated: "2025-10-28T20:28:09.923500049Z"
+generated: "2025-10-28T21:52:04.596593142Z"
