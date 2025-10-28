@@ -2,6 +2,23 @@
 
 All notable changes to this Helm chart will be documented in this file.
 
+## [1.4.1] - 2025-10-28
+
+### Fixed
+- **CRITICAL**: Updated Rust from 1.82 to 1.83 to resolve dependency compatibility issues
+- Fixed image tags in values.yaml to correctly reference 1.4.0 images
+- Resolved ICU library dependencies requiring Rust 1.83+
+
+### Changed
+- All Docker image tags updated to 1.4.1 (dotnet, nodejs, python, java, go, rust, websocket)
+- Updated Rust platform display from "Rust 1.82" to "Rust 1.83" throughout codebase
+
+### Technical Details
+This is a patch release to fix issues discovered after 1.4.0 was published:
+- Rust Dockerfile now uses rust:1.83 base image
+- helm upgrade will now correctly pull 1.4.1 images with all registration features and fixes
+- Rust build succeeds without dependency version conflicts
+
 ## [1.4.0] - 2025-10-28
 
 ### Added
