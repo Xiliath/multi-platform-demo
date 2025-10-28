@@ -43,6 +43,15 @@ data:
             listen 80;
             server_name localhost;
 
+            # Blocked page for unauthorized access
+            location = /blocked {
+                proxy_pass http://dotnet/blocked;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
             # Default route to .NET
             location = / {
                 proxy_pass http://dotnet;
@@ -79,8 +88,13 @@ data:
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
 
-            # Admin page route (default to .NET)
+            # Admin page route (default to .NET) - WITH SECRET HEADER
             location = /admin {
+                # Check for secret header
+                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                    return 302 /blocked;
+                }
+
                 proxy_pass http://dotnet/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -123,6 +137,10 @@ data:
             }
 
             location = /nodejs/admin {
+                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                    return 302 /blocked;
+                }
+
                 proxy_pass http://nodejs/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -164,6 +182,10 @@ data:
             }
 
             location = /python/admin {
+                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                    return 302 /blocked;
+                }
+
                 proxy_pass http://python/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -205,6 +227,10 @@ data:
             }
 
             location = /java/admin {
+                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                    return 302 /blocked;
+                }
+
                 proxy_pass http://java/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -246,6 +272,10 @@ data:
             }
 
             location = /go/admin {
+                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                    return 302 /blocked;
+                }
+
                 proxy_pass http://go/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -287,6 +317,10 @@ data:
             }
 
             location = /rust/admin {
+                if ($http_x_admin_secret != "my-demo-secret-2025") {
+                    return 302 /blocked;
+                }
+
                 proxy_pass http://rust/admin;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
