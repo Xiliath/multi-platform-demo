@@ -24,7 +24,7 @@ All notable changes to this Helm chart will be documented in this file.
 - Admin authentication uses nginx `map $http_x_admin_secret $admin_allowed` for single source of truth
 - Reduced code duplication in nginx config (42 lines removed)
 - Cleaner, more maintainable security configuration
-- All Docker image tags updated to 1.6.0
+- Docker image tags remain at 1.5.0 (will be updated to 1.6.0 automatically when merged to main)
 
 ### How to Access Admin Panel
 Users must install a browser header modification extension:
