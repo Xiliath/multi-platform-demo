@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access Launcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .info {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin: 20px 0;
+        }
+        .bookmarklet {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        a.bookmarklet-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        a.bookmarklet-link:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Access Launcher</h1>
+
+        <div class="info">
+            <strong>Authentication:</strong> This page automatically includes the required <code>X-Admin-Secret</code> header to access admin pages.
+        </div>
+
+        <div class="btn-group">
+            <button onclick="accessAdmin('/')">Access .NET Admin</button>
+            <button onclick="accessAdmin('/nodejs')">Access Node.js Admin</button>
+            <button onclick="accessAdmin('/python')">Access Python Admin</button>
+            <button onclick="accessAdmin('/java')">Access Java Admin</button>
+            <button onclick="accessAdmin('/go')">Access Go Admin</button>
+            <button onclick="accessAdmin('/rust')">Access Rust Admin</button>
+        </div>
+
+        <div class="bookmarklet">
+            <strong>Bookmarklet Option:</strong><br>
+            Drag this link to your bookmarks bar for quick access:<br>
+            <a href="javascript:(function(){window.location.href='http://localhost/admin';})();" class="bookmarklet-link">
+                Admin Quick Access
+            </a>
+            <br><br>
+            <small><strong>Note:</strong> The bookmarklet will navigate to the admin page, but the custom header will only work if your browser/extension supports it, or if you use the buttons above.</small>
+        </div>
+
+        <h2>How to Use</h2>
+        <ol>
+            <li>Click any button above to access the respective admin page</li>
+            <li>The page will open with the proper authentication header</li>
+            <li>Bookmark this HTML file for easy access</li>
+        </ol>
+
+        <h2>For Browser Extensions</h2>
+        <p>If you use a browser extension like ModHeader or Requestly, add this header:</p>
+        <ul>
+            <li><strong>Header Name:</strong> <code>X-Admin-Secret</code></li>
+            <li><strong>Header Value:</strong> <code>my-demo-secret-2025</code></li>
+        </ul>
+
+        <h2>For Command Line (curl)</h2>
+        <p>Use this command to access admin pages:</p>
+        <code style="display: block; padding: 10px;">
+            curl -H "X-Admin-Secret: my-demo-secret-2025" http://localhost/admin
+        </code>
+    </div>
+
+    <script>
+        const SECRET = 'my-demo-secret-2025';
+
+        function accessAdmin(path) {
+            const url = `http://localhost${path}/admin`;
+
+            // Try to open with fetch first to set headers
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Admin-Secret': SECRET
+                },
+                credentials: 'include'
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else if (response.ok) {
+                    // Open in a new window/tab with a proxy approach
+                    openAdminPage(url);
+                } else {
+                    alert('Access denied. Please check the configuration.');
+                }
+            })
+            .catch(error => {
+                // Fallback: try direct navigation (might not work due to CORS)
+                console.error('Fetch error:', error);
+                openAdminPage(url);
+            });
+        }
+
+        function openAdminPage(url) {
+            // Create a form to POST to the admin page (alternative approach)
+            const form = document.createElement('form');
+            form.method = 'GET';
+            form.action = url;
+            form.target = '_blank';
+
+            // Note: We can't set custom headers with form submission
+            // Users will need to use a browser extension or the proxy approach
+
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+
+            alert('Opening admin page. If you see a "blocked" page, you may need to:\n\n' +
+                  '1. Use a browser extension like ModHeader to add the X-Admin-Secret header, OR\n' +
+                  '2. Use a proxy/development tool that supports custom headers');
+        }
+    </script>
+</body>
+</html>
